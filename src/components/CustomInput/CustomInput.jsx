@@ -18,6 +18,7 @@ const CustomInput = ({
     ref,
     editable,
     value,
+    onChange,
 }) => {
     return (
         <>
@@ -51,6 +52,7 @@ const CustomInput = ({
                 name={name}
                 pattern={pattern}
                 disabled={editable}
+                onchange={onChange}
             />
             {leftIcon}
             {isError && error && (

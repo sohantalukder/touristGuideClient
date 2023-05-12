@@ -6,6 +6,7 @@ import loginImage from "../../../assets/sign-in-illustration.svg";
 import Link from "next/link";
 import Image from "next/image";
 import CustomInput from "@/components/CustomInput/CustomInput";
+import { handleSetInfo } from "@/utilities/handleFromData/handleFromData";
 const initialState = {
     email: "",
     password: "",
@@ -18,6 +19,8 @@ const Login = () => {
     //     const location = useRouter();
     const [fromData, setFromData] = useState(initialState);
     const [error, setError] = useState(initialError);
+    const [emailError, setEmailError] = useState(false);
+    const [validEmail, setValidEmail] = useState(true);
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
@@ -68,7 +71,19 @@ const Login = () => {
                                                     isError={true}
                                                     name={"name"}
                                                     editable={true}
-                                                    value={"sohan@gmail.com"}
+                                                    value={fromData.email}
+                                                    onChange={(e) =>
+                                                        handleSetInfo(
+                                                            "email",
+                                                            e.target.value,
+                                                            setFromData,
+                                                            fromData,
+                                                            setError,
+                                                            error,
+                                                            setValidEmail,
+                                                            setEmailError
+                                                        )
+                                                    }
                                                     pattern='/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'
                                                     // error={"Email is required"}
                                                 />
@@ -78,9 +93,9 @@ const Login = () => {
                                                     label='Password'
                                                     required
                                                     placeholder='Password'
-                                                    isError={true}
+                                                    isError={false}
                                                     name={"password"}
-                                                    error={"Email is required"}
+                                                    value={fromData.password}
                                                     pattern='/^(?=.*[0-9])(?=.*[!@#$%^&*.,])[a-zA-Z0-9!@#$%^&*.,]{6,16}$/'
                                                     leftIcon={
                                                         !passwordShown ? (
