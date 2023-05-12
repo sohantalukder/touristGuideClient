@@ -1,27 +1,29 @@
 "use client";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { BiHide, BiShowAlt } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
 import loginImage from "../../../assets/sign-in-illustration.svg";
 import Link from "next/link";
 import Image from "next/image";
+import CustomInput from "@/components/CustomInput/CustomInput";
+const initialState = {
+    email: "",
+    password: "",
+};
+const initialError = {
+    email: "",
+    password: "",
+};
 const Login = () => {
     //     const location = useRouter();
-
+    const [fromData, setFromData] = useState(initialState);
+    const [error, setError] = useState(initialError);
     const [passwordShown, setPasswordShown] = useState(false);
-
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
     };
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm();
-    const onSubmit = (data) => {
-        reset();
+    const onSubmit = (e) => {
+        e.preventDefault();
     };
     return (
         <div>
@@ -53,98 +55,51 @@ const Login = () => {
                                     Sign In
                                 </h1>
                                 <form
-                                    onSubmit={handleSubmit(onSubmit)}
+                                    onSubmit={onSubmit}
                                     className=' space-y-5'
                                 >
                                     <div className='space-y-5'>
                                         <ul className='w-full lg:w-[473px] space-y-5 mx-auto'>
-                                            <li className='flex flex-col items-start'>
-                                                <label
-                                                    htmlFor='email '
-                                                    className=" text-start after:content-['*'] after:ml-0.5 after:text-red mb-1 block"
-                                                >
-                                                    Email
-                                                </label>
-                                                <input
-                                                    type='email'
-                                                    className={
-                                                        errors.user_email
-                                                            ? "control-form  !border-red focus:!border-red"
-                                                            : "control-form !border-mediumGray focus:!border-green"
-                                                    }
+                                            <li className='flex flex-col items-start relative'>
+                                                <CustomInput
+                                                    label='Email'
+                                                    required
                                                     placeholder='Email'
-                                                    name='user_email'
-                                                    {...register("user_email", {
-                                                        required:
-                                                            "Email is Required.",
-                                                        pattern: {
-                                                            value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                                            message:
-                                                                "Email must be valid",
-                                                        },
-                                                    })}
-                                                    id='email'
+                                                    isError={true}
+                                                    name={"name"}
+                                                    editable={true}
+                                                    value={"sohan@gmail.com"}
+                                                    pattern='/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'
+                                                    // error={"Email is required"}
                                                 />
-                                                <p className='text-red pt-1 text-left text-sm'>
-                                                    {errors.user_email?.message}
-                                                </p>
                                             </li>
                                             <li className='flex flex-col items-start relative'>
-                                                <label
-                                                    htmlFor='Password '
-                                                    className=" text-start after:content-['*'] after:ml-0.5 after:text-red mb-1 block"
-                                                >
-                                                    Password
-                                                </label>
-                                                <input
-                                                    type={
-                                                        passwordShown
-                                                            ? "text"
-                                                            : "password"
-                                                    }
+                                                <CustomInput
+                                                    label='Password'
+                                                    required
                                                     placeholder='Password'
-                                                    id='Password'
-                                                    className={
-                                                        errors.user_password
-                                                            ? "control-form  !border-red focus:!border-red"
-                                                            : "control-form !border-mediumGray focus:!border-green"
+                                                    isError={true}
+                                                    name={"password"}
+                                                    error={"Email is required"}
+                                                    pattern='/^(?=.*[0-9])(?=.*[!@#$%^&*.,])[a-zA-Z0-9!@#$%^&*.,]{6,16}$/'
+                                                    leftIcon={
+                                                        !passwordShown ? (
+                                                            <BiHide
+                                                                className='absolute top-[43px] right-4 text-xl cursor-pointer'
+                                                                onClick={
+                                                                    togglePassword
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            <BiShowAlt
+                                                                className='absolute top-[43px] right-4 text-xl cursor-pointer'
+                                                                onClick={
+                                                                    togglePassword
+                                                                }
+                                                            />
+                                                        )
                                                     }
-                                                    {...register(
-                                                        "user_password",
-                                                        {
-                                                            required:
-                                                                "Password is Required...",
-                                                            pattern: {
-                                                                value: /^(?=.*[0-9])(?=.*[!@#$%^&*.,])[a-zA-Z0-9!@#$%^&*.,]{6,16}$/,
-                                                                message:
-                                                                    "Password Must Contain At least 6 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character",
-                                                            },
-                                                            maxLength: {
-                                                                value: 15,
-                                                                message:
-                                                                    "Password must be at most 15 characters long...",
-                                                            },
-                                                        }
-                                                    )}
-                                                    name='user_password'
                                                 />
-                                                {!passwordShown ? (
-                                                    <BiHide
-                                                        className='absolute top-[43px] right-4 text-xl cursor-pointer'
-                                                        onClick={togglePassword}
-                                                    />
-                                                ) : (
-                                                    <BiShowAlt
-                                                        className='absolute top-[43px] right-4 text-xl cursor-pointer'
-                                                        onClick={togglePassword}
-                                                    />
-                                                )}
-                                                <p className='text-red pt-1 text-left text-sm'>
-                                                    {
-                                                        errors.user_password
-                                                            ?.message
-                                                    }
-                                                </p>
                                             </li>
                                         </ul>
                                         <div className='text-left w-full lg:w-[473px] lg:px-0 mx-auto'>
