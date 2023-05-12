@@ -15,25 +15,25 @@ code {
         monospace;
 }
 .header {
-    @layer after:absolute  after:bottom-[12px] after:left-0  after:w-24 after:h-1 after:bg-green;
+    @apply after:absolute  after:bottom-[12px] after:left-0  after:w-24 after:h-1 after:bg-green;
 }
 .header-w {
-    @layer after:absolute  after:bottom-[12px] after:left-0  after:w-24 after:h-1 after:bg-white;
+    @apply after:absolute  after:bottom-[12px] after:left-0  after:w-24 after:h-1 after:bg-white;
 }
 .btn-green {
-    @layer px-6 py-2 bg-green text-white hover:shadow-lg transition-all;
+    @apply px-6 py-2 bg-green text-white hover:shadow-lg transition-all;
 }
 .container {
-    @layer px-4 md:px-0;
+    @apply px-4 md:px-0;
 }
 .navbar-home {
-    @layer fixed  top-0  w-full left-0 z-50 transition-all  border-b border-mediumGray;
+    @apply fixed  top-0  w-full left-0 z-50 transition-all  border-b border-mediumGray;
 }
 .header-bg {
-    @layer bg-white shadow;
+    @apply bg-white shadow;
 }
 .navList {
-    @layer font-medium;
+    @apply font-medium;
 }
 .shadow-custom {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -62,10 +62,10 @@ code {
     transition-property: opacity, transform;
 }
 .accordion-item__line {
-    @layer flex justify-between items-center bg-white z-[2] relative;
+    @apply flex justify-between items-center bg-white z-[2] relative;
 }
 .accordion-item__title {
-    @layer text-lg md:text-xl font-semibold text-black;
+    @apply text-lg md:text-xl font-semibold text-black;
 }
 .accordion-item__icon {
     width: 1.2rem;
@@ -94,16 +94,16 @@ code {
     transition-delay: 0.5s;
 }
 .accordion {
-    @layer !shadow-sm border border-lightGray hover:border-green focus:border-green rounded-sm  transition-all delay-75 w-full cursor-pointer px-6 py-4;
+    @apply !shadow-sm border border-lightGray hover:border-green focus:border-green rounded-sm  transition-all delay-75 w-full cursor-pointer px-6 py-4;
 }
 .accordion-item--opened {
-    @layer !shadow-sm border border-lightGray hover:border-green focus:border-green rounded-sm  transition-all delay-75 w-full cursor-pointer px-6 py-4;
+    @apply !shadow-sm border border-lightGray hover:border-green focus:border-green rounded-sm  transition-all delay-75 w-full cursor-pointer px-6 py-4;
 }
 .icon-calender {
-    @layer !bg-green;
+    @apply !bg-green;
 }
 .date {
-    @layer focus:!border-green;
+    @apply focus:!border-green;
 }
 .hCOnUy {
     min-height: 0 !important;
@@ -111,27 +111,27 @@ code {
 }
 .sc-hKMtZM svg,
 .pHieT svg {
-    @layer !hidden;
+    @apply !hidden;
 }
 .sc-hKMtZM input {
-    @layer !px-4;
+    @apply !px-4;
 }
 .icon-calendar {
-    @layer !hidden;
+    @apply !hidden;
 }
 .date {
-    @layer focus:!border-green;
+    @apply focus:!border-green;
 }
 
 .wrapper {
-    @layer !py-3   !w-full  lg:!px-0 !border !border-mediumGray  !outline-none focus:!outline-none focus:!border-green hover:!border-green !text-black !transition-all !rounded-none !shadow-none !relative !h-auto;
+    @apply !py-3   !w-full  lg:!px-0 !border !border-mediumGray  !outline-none focus:!outline-none focus:!border-green hover:!border-green !text-black !transition-all !rounded-none !shadow-none !relative !h-auto;
     font-family: "Poppins", sans-serif !important;
 }
 .selected {
-    @layer after:!bg-green after:!border-green;
+    @apply after:!bg-green after:!border-green;
 }
 .hovered {
-    @layer !bg-greenLight;
+    @apply !bg-greenLight;
 }
 .react-google-flight-datepicker .day.selected.hovered {
     background: linear-gradient(90deg, #fff 50%, #9fd866 50%) !important;
@@ -146,7 +146,7 @@ code {
     border: 2px solid #5fbe00 !important;
 }
 .submit-button {
-    @layer !bg-green hover:!bg-black !transition-all;
+    @apply !bg-green hover:!bg-black !transition-all;
 }
 .shadow-event {
     box-shadow: 7px -1px 30px rgba(0, 0, 0, 0.15);
@@ -253,10 +253,10 @@ code {
     background: #33313b;
 }
 .control-form {
-    @layer !py-3 !px-4  w-full lg:w-[473px] lg:px-0 border border-mediumGray bg-lightGray outline-none focus:outline-none focus:border-green text-black transition-all;
+    @apply !py-3 !px-4  w-full lg:w-[473px] lg:px-0 border border-mediumGray bg-lightGray outline-none focus:outline-none focus:border-green text-black transition-all;
 }
 .admin-form {
-    @layer !py-2.5 !px-4  w-full lg:px-0 border border-mediumGray outline-none focus:outline-none focus:border-green text-black transition-all rounded-md;
+    @apply !py-2.5 !px-4  w-full lg:px-0 border border-mediumGray outline-none focus:outline-none focus:border-green text-black transition-all rounded-md;
 }
 .off-canvas-wrapper {
     position: fixed;
