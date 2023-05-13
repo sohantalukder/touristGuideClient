@@ -195,7 +195,7 @@ const ShareExperience = () => {
                                                             as={Fragment}
                                                             leave='transition ease-in duration-100'
                                                             leaveFrom='opacity-100'
-                                                            leaveTo='opacity-0'
+                                                            leavehref='opacity-0'
                                                         >
                                                             <Listbox.Options className='absolute z-10 bg-white w-full max-h-56 rounded-sm py-1 text-base border border-mediumGray overflow-auto focus:outline-none sm:text-sm'>
                                                                 {categories.map(
@@ -258,7 +258,7 @@ const ShareExperience = () => {
                                                             as={Fragment}
                                                             leave='transition ease-in duration-100'
                                                             leaveFrom='opacity-100'
-                                                            leaveTo='opacity-0'
+                                                            leavehref='opacity-0'
                                                         >
                                                             <Listbox.Options className='absolute z-10 bg-white w-full max-h-56 rounded-sm py-1 text-base border border-mediumGray overflow-auto focus:outline-none sm:text-sm'>
                                                                 {privacy.map(

@@ -1,16 +1,17 @@
 import React from "react";
 import { Toaster } from "react-hot-toast";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 
-const userRootLayout = ({ children }) => {
+const UserRootLayout = ({ children }) => {
     return (
         <>
+            <Navbar />
             {children}
             <Toaster
-                position='top-right'
+                position='bottom-center'
                 reverseOrder={false}
                 gutter={8}
-                containerClassName=''
-                containerStyle={{}}
                 toastOptions={{
                     // Define default options
                     className: "",
@@ -19,19 +20,11 @@ const userRootLayout = ({ children }) => {
                         background: "#363636",
                         color: "#fff",
                     },
-
-                    // Default options for specific types
-                    success: {
-                        duration: 3000,
-                        theme: {
-                            primary: "green",
-                            secondary: "black",
-                        },
-                    },
                 }}
             />
+            <Footer />
         </>
     );
 };
 
-export default userRootLayout;
+export default UserRootLayout;

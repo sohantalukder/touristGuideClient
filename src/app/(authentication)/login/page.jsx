@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
 import loginImage from "../../assets/sign-in-illustration.svg";
@@ -58,10 +58,12 @@ const Login = () => {
         }
         handleError();
     };
+    useEffect(() => {
+        isError && toast.error(isError.data?.response?.status?.message);
+    }, [isError]);
     return (
         <div>
-            <Toaster />
-            <div className='container mx-auto max-w-[1180px] px-4 lg:px-0 py-16'>
+            <div className='container mx-auto max-w-[1180px] px-4 lg:px-0 py-32'>
                 <div className='flex flex-col lg:flex-row items-center justify-center'>
                     <div className='w-full lg:w-[537px] hidden lg:block'>
                         <div className='flex flex-col justify-center text-center'>
