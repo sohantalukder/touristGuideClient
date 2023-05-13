@@ -16,9 +16,10 @@ const CustomInput = ({
     required = false,
     id = "",
     ref,
-    editable,
+    editable = false,
     value,
     onChange,
+    passwordShown,
 }) => {
     return (
         <>
@@ -35,7 +36,7 @@ const CustomInput = ({
             )}
             {rightIcon}
             <input
-                type={type}
+                type={passwordShown ? "text" : type}
                 className={`control-form ${style}  ${
                     isError && !editable
                         ? `!border-red focus:!border-red`
@@ -50,9 +51,8 @@ const CustomInput = ({
                 required={required}
                 placeholder={placeholder}
                 name={name}
-                pattern={pattern}
                 disabled={editable}
-                onchange={onChange}
+                onChange={(e) => onChange(e.target.value)}
             />
             {leftIcon}
             {isError && error && (

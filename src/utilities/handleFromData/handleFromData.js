@@ -7,7 +7,6 @@ export const handleSetInfo = (
     infoValue,
     setError,
     error,
-    setValidEmail,
     setEmailError
 ) => {
     if (name) {
@@ -17,7 +16,6 @@ export const handleSetInfo = (
                     ...infoValue,
                     [name]: value,
                 });
-                setValidEmail(true);
                 setEmailError(false);
             } else {
                 if (value.length > 0) {
@@ -25,15 +23,12 @@ export const handleSetInfo = (
                         ...infoValue,
                         [name]: value,
                     });
-                    setValidEmail(false);
-
                     setEmailError(true);
                 } else {
                     setInfoValue({
                         ...infoValue,
                         [name]: value,
                     });
-                    setValidEmail(false);
                     setEmailError(false);
                 }
             }

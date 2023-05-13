@@ -12,21 +12,36 @@ const initialState = {
     password: "",
 };
 const initialError = {
-    email: "",
-    password: "",
+    email: false,
+    password: false,
 };
 const Login = () => {
     //     const location = useRouter();
     const [fromData, setFromData] = useState(initialState);
     const [error, setError] = useState(initialError);
     const [emailError, setEmailError] = useState(false);
-    const [validEmail, setValidEmail] = useState(true);
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
     };
+    const handleError = () => {
+        const { email, password } = fromData;
+        const errorEmail = email === "" ? true : false;
+        const errorPassword = password === "" ? true : false;
+        setError({
+            ...error,
+            email: errorEmail,
+            password: errorPassword,
+        });
+    };
     const onSubmit = (e) => {
         e.preventDefault();
+        const { email, password } = fromData;
+        if (email && password && !loading) {
+            console.log("first");
+            return;
+        }
+        handleError();
     };
     return (
         <div>
@@ -68,35 +83,65 @@ const Login = () => {
                                                     label='Email'
                                                     required
                                                     placeholder='Email'
-                                                    isError={true}
                                                     name={"name"}
-                                                    editable={true}
                                                     value={fromData.email}
-                                                    onChange={(e) =>
+                                                    onChange={(text) =>
                                                         handleSetInfo(
                                                             "email",
-                                                            e.target.value,
+                                                            text,
                                                             setFromData,
                                                             fromData,
                                                             setError,
                                                             error,
-                                                            setValidEmail,
                                                             setEmailError
                                                         )
                                                     }
-                                                    pattern='/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'
-                                                    // error={"Email is required"}
+                                                    isError={
+                                                        (emailError &&
+                                                            fromData.email) ||
+                                                        (error.email &&
+                                                            !fromData.email)
+                                                    }
+                                                    error={
+                                                        (emailError &&
+                                                            fromData.email &&
+                                                            "Your email is not valid.") ||
+                                                        (error.email &&
+                                                            !fromData.email &&
+                                                            "This field is required.")
+                                                    }
                                                 />
                                             </li>
                                             <li className='flex flex-col items-start relative'>
                                                 <CustomInput
                                                     label='Password'
                                                     required
+                                                    type='password'
                                                     placeholder='Password'
-                                                    isError={false}
                                                     name={"password"}
                                                     value={fromData.password}
-                                                    pattern='/^(?=.*[0-9])(?=.*[!@#$%^&*.,])[a-zA-Z0-9!@#$%^&*.,]{6,16}$/'
+                                                    onChange={(text) =>
+                                                        handleSetInfo(
+                                                            "password",
+                                                            text,
+                                                            setFromData,
+                                                            fromData,
+                                                            setError,
+                                                            error
+                                                        )
+                                                    }
+                                                    isError={
+                                                        error.password &&
+                                                        !fromData.password
+                                                    }
+                                                    error={
+                                                        error.password &&
+                                                        !fromData.password &&
+                                                        "This field is required!"
+                                                    }
+                                                    passwordShown={
+                                                        passwordShown
+                                                    }
                                                     leftIcon={
                                                         !passwordShown ? (
                                                             <BiHide
