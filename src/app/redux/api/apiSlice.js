@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_API_URL } from "../../../config";
-// import { userLoggedOut } from "../auth/authSlice";
+import { BASE_API_URL } from "../../../../config";
+
 const baseQuery = fetchBaseQuery({
     baseUrl: BASE_API_URL,
     prepareHeaders: async (headers, { getState, endpoint }) => {

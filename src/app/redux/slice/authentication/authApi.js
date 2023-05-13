@@ -1,11 +1,12 @@
-import { apiSlice } from "@/redux/api/apiSlice";
+import { apiSlice } from "../../api/apiSlice";
 import { userLoggedIn } from "./authSlice";
 
 export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        // endpoints here
         login: builder.mutation({
-            data: (data) => ({
-                url: "login",
+            query: (data) => ({
+                url: "/auth/login",
                 method: "POST",
                 body: data,
             }),
@@ -15,8 +16,7 @@ export const authApi = apiSlice.injectEndpoints({
                     localStorage.setItem(
                         "auth",
                         JSON.stringify({
-                            accessToken: result.data.accessToken,
-                            user: result.data.user,
+                            user: result.response?.records,
                         })
                     );
                     dispatch(
@@ -24,10 +24,14 @@ export const authApi = apiSlice.injectEndpoints({
                             user: result.response?.records,
                         })
                     );
-                } catch (error) {
-                    console.log(error);
+                } catch (e) {
+                    userLoggedIn({
+                        user: result.response?.records,
+                    });
                 }
             },
         }),
     }),
 });
+
+export const { useLoginMutation } = authApi;

@@ -2,12 +2,14 @@
 import { useState } from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
-import loginImage from "../../../assets/sign-in-illustration.svg";
+import loginImage from "../../assets/sign-in-illustration.svg";
 import Link from "next/link";
 import Image from "next/image";
-import CustomInput from "@/components/CustomInput/CustomInput";
-import { handleSetInfo } from "@/utilities/handleFromData/handleFromData";
-import Spinner from "@/utilities/spinner/spinner";
+import CustomInput from "../../components/CustomInput/CustomInput";
+import { handleSetInfo } from "../../utilities/handleFromData/handleFromData";
+import { useLoginMutation } from "../../redux/slice/authentication/authApi";
+import Spinner from "@/app/utilities/spinner/Spinner";
+import { Toaster, toast } from "react-hot-toast";
 const initialState = {
     email: "",
     password: "",
@@ -26,6 +28,7 @@ const Login = () => {
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
     };
+    const [login, { data, isLoading, error: isError }] = useLoginMutation();
     const handleError = () => {
         const { email, password } = fromData;
         const errorEmail = email === "" ? true : false;
@@ -36,17 +39,28 @@ const Login = () => {
             password: errorPassword,
         });
     };
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         const { email, password } = fromData;
         if (email && password && !loading) {
-            setLoading(true);
+            const result = await login({
+                email,
+                password,
+            });
+            const { records, status } = result?.data?.response;
+            console.log(status);
+            if (status?.code === 200) {
+                toast.success("Successfully logged in");
+            } else {
+                toast.error(status.message);
+            }
             return;
         }
         handleError();
     };
     return (
         <div>
+            <Toaster />
             <div className='container mx-auto max-w-[1180px] px-4 lg:px-0 py-16'>
                 <div className='flex flex-col lg:flex-row items-center justify-center'>
                     <div className='w-full lg:w-[537px] hidden lg:block'>
@@ -175,15 +189,14 @@ const Login = () => {
                                     </div>
                                     <button
                                         type='submit'
-                                        disabled={loading}
+                                        disabled={isLoading}
                                         className='bg-green text-white transition-all rounded-sm hover:bg-black px-6 w-full lg:w-[473px] h-[50px]'
                                     >
                                         <div className='flex justify-center items-center'>
-                                            {!loading ? <Spinner /> : "Log In"}
+                                            {isLoading ? <Spinner /> : "Log In"}
                                         </div>
                                     </button>
                                 </form>
-
                                 <div className='flex space-x-2 lg:space-x-10  justify-between items-center text-center px-6 w-full lg:w-[473px] lg:px-0 mx-auto'>
                                     <div className='w-1/4 lg:w-1/3 border border-mediumGray'></div>
 
