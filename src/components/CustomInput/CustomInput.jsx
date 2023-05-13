@@ -6,7 +6,6 @@ const CustomInput = ({
     style,
     placeholder = "",
     name = "",
-    pattern = "",
     error,
     isError,
     leftIcon,

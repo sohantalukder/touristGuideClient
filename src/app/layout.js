@@ -1,3 +1,4 @@
+import { Providers } from "@/redux/Provider";
 import "./globals.css";
 export const metadata = {
     title: "Tourist Guide",
@@ -7,7 +8,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang='en'>
-            <body suppressHydrationWarning={true}>{children}</body>
+            <body suppressHydrationWarning={true}>
+                <Providers>{children}</Providers>
+            </body>
         </html>
     );
 }

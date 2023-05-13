@@ -202,8 +202,7 @@ code {
     height: 0;
     border-style: solid;
 }
-.project-wrap .img .price:before {
-}
+
 .project-wrap.hotel .img {
     height: 320px;
 }

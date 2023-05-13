@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import CustomInput from "@/components/CustomInput/CustomInput";
 import { handleSetInfo } from "@/utilities/handleFromData/handleFromData";
+import Spinner from "@/utilities/spinner/spinner";
 const initialState = {
     email: "",
     password: "",
@@ -21,6 +22,7 @@ const Login = () => {
     const [error, setError] = useState(initialError);
     const [emailError, setEmailError] = useState(false);
     const [passwordShown, setPasswordShown] = useState(false);
+    const [loading, setLoading] = useState(false);
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
     };
@@ -38,7 +40,7 @@ const Login = () => {
         e.preventDefault();
         const { email, password } = fromData;
         if (email && password && !loading) {
-            console.log("first");
+            setLoading(true);
             return;
         }
         handleError();
@@ -173,9 +175,12 @@ const Login = () => {
                                     </div>
                                     <button
                                         type='submit'
-                                        className='bg-green text-white transition-all rounded-sm hover:bg-black px-6 w-full lg:w-[473px] lg:px-0 py-3'
+                                        disabled={loading}
+                                        className='bg-green text-white transition-all rounded-sm hover:bg-black px-6 w-full lg:w-[473px] h-[50px]'
                                     >
-                                        Log In
+                                        <div className='flex justify-center items-center'>
+                                            {!loading ? <Spinner /> : "Log In"}
+                                        </div>
                                     </button>
                                 </form>
 
