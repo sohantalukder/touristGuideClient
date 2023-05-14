@@ -1,6 +1,6 @@
+import Cookies from "js-cookie";
 import { apiSlice } from "../../api/apiSlice";
 import { userLoggedIn } from "./authSlice";
-
 export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
@@ -13,11 +13,15 @@ export const authApi = apiSlice.injectEndpoints({
                 try {
                     const result = await queryFulfilled;
                     if (result) {
-                        localStorage.setItem(
+                        Cookies.set(
                             "auth",
-                            JSON.stringify({
-                                user: result?.data?.response?.records,
-                            })
+                            JSON.stringify(result?.data?.response?.records),
+                            {
+                                expires: 7,
+                                secure: true,
+                                sameSite: "strict",
+                                path: "/",
+                            }
                         );
                         dispatch(
                             userLoggedIn({

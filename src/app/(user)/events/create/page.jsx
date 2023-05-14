@@ -28,9 +28,7 @@ const services = [
     },
 ];
 const CreateEvent = () => {
-    const onDateChange = () => {
-        console.log("first");
-    };
+    const onDateChange = () => {};
     const items = [
         {
             id: 0,

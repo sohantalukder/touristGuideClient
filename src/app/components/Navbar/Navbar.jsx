@@ -10,8 +10,13 @@ const Navbar = () => {
     const handleClick = () => setClick(!click);
     // Change color of header
     const [color, setColor] = useState(false);
-    const { user } = useSelector((state) => state.auth);
-    console.log(user);
+    const [user, setUser] = useState({});
+    const { user: loginUser } = useSelector((state) => state.auth);
+    useEffect(() => {
+        if (loginUser) {
+            setUser(loginUser);
+        }
+    }, [loginUser]);
     const changeColor = () => {
         if (window.scrollY >= 90) {
             setColor(true);

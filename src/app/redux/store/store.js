@@ -1,11 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 import authSliceReducer from "../slice/authentication/authSlice";
-const userInfoFromStorage = localStorage.getItem("auth")
-    ? JSON.parse(localStorage.getItem("auth"))
+import Cookies from "js-cookie";
+
+const userInfoFromStorage = Cookies.get("auth")
+    ? JSON.parse(Cookies.get("auth"))
     : null;
+
 const preloadedState = {
-    auth: { user: userInfoFromStorage?.user },
+    auth: { user: userInfoFromStorage },
 };
 export const store = configureStore({
     preloadedState,
