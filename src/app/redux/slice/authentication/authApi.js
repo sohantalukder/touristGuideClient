@@ -3,7 +3,6 @@ import { userLoggedIn } from "./authSlice";
 
 export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        // endpoints here
         login: builder.mutation({
             query: (data) => ({
                 url: "/auth/login",
@@ -13,22 +12,20 @@ export const authApi = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 try {
                     const result = await queryFulfilled;
-                    localStorage.setItem(
-                        "auth",
-                        JSON.stringify({
-                            user: result.response?.records,
-                        })
-                    );
-                    dispatch(
-                        userLoggedIn({
-                            user: result.response?.records,
-                        })
-                    );
-                } catch (e) {
-                    userLoggedIn({
-                        user: result.response?.records,
-                    });
-                }
+                    if (result) {
+                        localStorage.setItem(
+                            "auth",
+                            JSON.stringify({
+                                user: result?.data?.response?.records,
+                            })
+                        );
+                        dispatch(
+                            userLoggedIn({
+                                user: result?.data?.response?.records,
+                            })
+                        );
+                    }
+                } catch (e) {}
             },
         }),
     }),

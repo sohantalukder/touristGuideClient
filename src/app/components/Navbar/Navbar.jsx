@@ -4,11 +4,14 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import logoB from "../../assets/logo/Black logo.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 const Navbar = () => {
     const [click, setClick] = useState(false);
     const handleClick = () => setClick(!click);
     // Change color of header
     const [color, setColor] = useState(false);
+    const { user } = useSelector((state) => state.auth);
+    console.log(user);
     const changeColor = () => {
         if (window.scrollY >= 90) {
             setColor(true);
@@ -86,18 +89,29 @@ const Navbar = () => {
                     </li>
                 </ul>
                 <div className='hidden lg:block space-x-0 md:space-x-6'>
-                    <Link
-                        href='/login'
-                        className='  px-6 py-2 border border-black hover:bg-green  hover:border-green transition-all hover:text-white  font-medium'
-                    >
-                        Log In
-                    </Link>
-                    <Link
-                        href='/register'
-                        className=' px-6 py-2 border text-white border-green bg-green hover:bg-green hover:border-green transition-all font-medium'
-                    >
-                        Register
-                    </Link>
+                    {user?.name ? (
+                        <Link
+                            href={"/profile"}
+                            className=' px-6 py-2 border text-white border-green bg-green hover:bg-green hover:border-green transition-all font-medium'
+                        >
+                            {user?.name}
+                        </Link>
+                    ) : (
+                        <>
+                            <Link
+                                href='/login'
+                                className='  px-6 py-2 border border-black hover:bg-green  hover:border-green transition-all hover:text-white  font-medium'
+                            >
+                                Log In
+                            </Link>
+                            <Link
+                                href='/register'
+                                className=' px-6 py-2 border text-white border-green bg-green hover:bg-green hover:border-green transition-all font-medium'
+                            >
+                                Register
+                            </Link>
+                        </>
+                    )}
                 </div>
             </nav>
         </div>

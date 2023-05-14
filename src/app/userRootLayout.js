@@ -12,6 +12,9 @@ const UserRootLayout = ({ children }) => {
                 position='bottom-center'
                 reverseOrder={false}
                 gutter={8}
+                containerStyle={{
+                    bottom: "50px",
+                }}
                 toastOptions={{
                     // Define default options
                     className: "",

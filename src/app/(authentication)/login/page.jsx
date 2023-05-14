@@ -24,11 +24,10 @@ const Login = () => {
     const [error, setError] = useState(initialError);
     const [emailError, setEmailError] = useState(false);
     const [passwordShown, setPasswordShown] = useState(false);
-    const [loading, setLoading] = useState(false);
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
     };
-    const [login, { data, isLoading, error: isError }] = useLoginMutation();
+    const [login, { isLoading, error: isError }] = useLoginMutation();
     const handleError = () => {
         const { email, password } = fromData;
         const errorEmail = email === "" ? true : false;
@@ -42,17 +41,14 @@ const Login = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         const { email, password } = fromData;
-        if (email && password && !loading) {
+        if (email && password && !isLoading) {
             const result = await login({
                 email,
                 password,
             });
-            const { records, status } = result?.data?.response;
-            console.log(status);
+            const { status } = result?.data?.response || {};
             if (status?.code === 200) {
                 toast.success("Successfully logged in");
-            } else {
-                toast.error(status.message);
             }
             return;
         }
