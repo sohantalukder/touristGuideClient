@@ -9,7 +9,8 @@ import CustomInput from "../../components/CustomInput/CustomInput";
 import { handleSetInfo } from "../../utilities/handleFromData/handleFromData";
 import { useLoginMutation } from "../../redux/slice/authentication/authApi";
 import Spinner from "@/app/utilities/spinner/Spinner";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
+import { useGoogleLogin } from "@react-oauth/google";
 const initialState = {
     email: "",
     password: "",
@@ -57,6 +58,26 @@ const Login = () => {
     useEffect(() => {
         isError && toast.error(isError.data?.response?.status?.message);
     }, [isError]);
+    const googleSignIn = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            const userInfo = await fetch(
+                "https://www.googleapis.com/oauth2/v3/userinfo",
+                {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${tokenResponse.access_token}`,
+                    },
+                }
+            )
+                .then((res) => res.json())
+                .then((data) => {
+                    return data;
+                })
+                .catch((err) => {});
+
+            console.log(userInfo);
+        },
+    });
     return (
         <div>
             <div className='container mx-auto max-w-[1180px] px-4 lg:px-0 py-32'>
@@ -204,7 +225,10 @@ const Login = () => {
                                     <div className=' w-1/4 lg:w-1/3 border border-mediumGray'></div>
                                 </div>
                                 <div className='flex justify-center items-center'>
-                                    <button className='border border-mediumGray py-3 px-6 w-full lg:w-[473px] lg:px-0 flex justify-center items-center'>
+                                    <button
+                                        onClick={() => googleSignIn()}
+                                        className='border border-mediumGray py-3 px-6 w-full lg:w-[473px] lg:px-0 flex justify-center items-center'
+                                    >
                                         <FcGoogle className='mr-2 text-2xl' />
                                         Sign up with Google
                                     </button>

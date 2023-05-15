@@ -5,8 +5,9 @@ import { RangeDatePicker } from "react-google-flight-datepicker";
 import "react-google-flight-datepicker/dist/main.css";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
-import loginImage from "../../../../assets/create-event-illustration.svg";
-import DropDown from "@/components/Dropdown/Dropdown";
+import loginImage from "../../../assets/create-event-illustration.svg";
+import DropDown from "../../../components/Dropdown/Dropdown";
+import Image from "next/image";
 const hire = [
     {
         id: 1,
@@ -99,7 +100,7 @@ const CreateEvent = () => {
                                 very easily and let you enjoy the natural beauty
                                 of Bangladesh.
                             </p>
-                            <img
+                            <Image
                                 src={loginImage}
                                 className='w-auto h-auto'
                                 alt=''

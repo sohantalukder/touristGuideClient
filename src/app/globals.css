@@ -2363,7 +2363,8 @@ code {
     a {
     color: #5fbe00 !important;
 }
-.res-mobile-menu.menu-active-four
+.res-mobile-menu
+    .menu-active-four
     .slicknav_nav
     > li.slicknav_parent:nth-child(4)
     a
@@ -2642,7 +2643,7 @@ code {
     font-weight: 700;
     transform: translateY(80%);
 }
-.has-submenu.full-width {
+.has-submenu .full-width {
     position: static;
 }
 .has-submenu.colunm-two {
@@ -2652,7 +2653,7 @@ code {
     left: -35px;
     width: 600px;
 }
-.has-submenu.colunm-two .submenu-nav-mega .mega-menu-item {
+.has-submenu .colunm-two .submenu-nav-mega .mega-menu-item {
     padding: 0 !important;
     flex-basis: 50%;
 }

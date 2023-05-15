@@ -2,6 +2,7 @@ import React from "react";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
+import ScrollTop from "./components/ScrollToTop/ScrollToTop";
 
 const UserRootLayout = ({ children }) => {
     return (
@@ -16,7 +17,6 @@ const UserRootLayout = ({ children }) => {
                     bottom: "50px",
                 }}
                 toastOptions={{
-                    // Define default options
                     className: "",
                     duration: 5000,
                     style: {
@@ -25,6 +25,7 @@ const UserRootLayout = ({ children }) => {
                     },
                 }}
             />
+            <ScrollTop/>
             <Footer />
         </>
     );
