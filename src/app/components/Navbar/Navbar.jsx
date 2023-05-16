@@ -7,6 +7,7 @@ import { VscChromeMinimize, VscClose } from "react-icons/vsc";
 import logo from "../../assets/logo/Black logo.svg";
 import Link from "next/link";
 import Image from "next/image";
+import { useSelector } from "react-redux";
 const NavBar = () => {
     const [click, setClick] = useState(false);
 
@@ -16,7 +17,6 @@ const NavBar = () => {
     const handleShowMenu = (e) => {
         setShowMenu(e);
     };
-    // Change color of header
     const [sticky, setSticky] = useState(false);
     const [slickNav, setSlickNav] = useState(false);
     const [slickNav2, setSlickNav2] = useState(false);
@@ -48,6 +48,13 @@ const NavBar = () => {
         setSearchOpen(e);
     };
 useEffect(()=>{  window.addEventListener("scroll", stickyHeder);},[])
+const {user:userData}=useSelector(state=>state.auth);
+const [user, setUser]=useState({})
+useEffect(()=>{
+    if(userData){
+        setUser(userData)
+    }
+},[userData])
     return (
         <div className='preloader-deactive fix'>
             <div>
@@ -197,22 +204,21 @@ useEffect(()=>{  window.addEventListener("scroll", stickyHeder);},[])
                                                 <span></span>
                                                 <span></span>
                                             </button>
-                                            {/* {console.log(user)} */}
-                                            {/* {user?.displayName ? (
+                                            {user?.name ? (
                                                 <Link
                                                     className='btn-theme btn-two'
                                                     href='/profile'
                                                 >
-                                                    {user.displayName}
+                                                    {user?.name}
                                                 </Link>
-                                            ) : ( */}
+                                            ) : (
                                             <Link
                                                 className='btn-theme btn-two'
                                                 href='/login'
                                             >
                                                 Log In
                                             </Link>
-                                            {/* )} */}
+                                           )} 
                                         </div>
                                     </div>
                                 </div>

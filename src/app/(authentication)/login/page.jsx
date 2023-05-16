@@ -8,9 +8,13 @@ import Image from "next/image";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import { handleSetInfo } from "../../utilities/handleFromData/handleFromData";
 import { useLoginMutation } from "../../redux/slice/authentication/authApi";
-import Spinner from "@/app/utilities/spinner/Spinner";
+import Spinner from "../../utilities/spinner/Spinner";
 import { toast } from "react-hot-toast";
 import { useGoogleLogin } from "@react-oauth/google";
+import { BASE_API_URL } from "../../../../config";
+import { useDispatch } from "react-redux";
+import { userLoggedIn } from "../../redux/slice/authentication/authSlice";
+import { query, mutation } from "../../utilities/apiRequest/apiRequest";
 const initialState = {
     email: "",
     password: "",
@@ -20,10 +24,10 @@ const initialError = {
     password: false,
 };
 const Login = () => {
-    //     const location = useRouter();
     const [fromData, setFromData] = useState(initialState);
     const [error, setError] = useState(initialError);
     const [emailError, setEmailError] = useState(false);
+    const dispatch = useDispatch();
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
@@ -60,22 +64,21 @@ const Login = () => {
     }, [isError]);
     const googleSignIn = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
-            const userInfo = await fetch(
+            const userInfo = await query(
                 "https://www.googleapis.com/oauth2/v3/userinfo",
-                {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${tokenResponse.access_token}`,
-                    },
-                }
-            )
-                .then((res) => res.json())
-                .then((data) => {
-                    return data;
+                "GET",
+                tokenResponse?.access_token
+            );
+            const getLogin = await mutation(
+                `${BASE_API_URL}/auth/googleLogin`,
+                "POST",
+                userInfo
+            );
+            dispatch(
+                userLoggedIn({
+                    user: getLogin?.response?.records,
                 })
-                .catch((err) => {});
-
-            console.log(userInfo);
+            );
         },
     });
     return (
