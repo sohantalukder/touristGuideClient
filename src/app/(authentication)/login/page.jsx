@@ -108,7 +108,7 @@ const Login = () => {
                         <div className='flex flex-col  text-left lg:text-center w-full '>
                             <div className='space-y-5'>
                                 <h1 className='text-2xl text-green font-bold'>
-                                    Sign In
+                                    Log In
                                 </h1>
                                 <form
                                     onSubmit={onSubmit}
