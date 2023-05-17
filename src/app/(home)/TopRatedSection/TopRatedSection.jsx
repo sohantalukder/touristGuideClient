@@ -60,7 +60,7 @@ const TopRatedSection = () => {
     return (
         <div
             style={{
-                backgroundImage: `url(${backgroundImage})`,
+                backgroundImage: `url(${backgroundImage.src})`,
                 backgroundSize: "cover",
             }}
             className='h-'
