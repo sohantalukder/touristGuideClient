@@ -19,6 +19,8 @@ const CustomInput = ({
     value,
     onChange,
     passwordShown,
+    maxLength = "",
+    minLength = "",
 }) => {
     return (
         <>
@@ -50,6 +52,8 @@ const CustomInput = ({
                 required={required}
                 placeholder={placeholder}
                 name={name}
+                maxLength={maxLength}
+                minLength={minLength}
                 disabled={editable}
                 onChange={(e) => onChange(e.target.value)}
             />
