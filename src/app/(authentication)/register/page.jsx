@@ -60,10 +60,11 @@ const Register = () => {
             const obj = { email, password, name };
             const result = await mutation(URL, "POST", obj);
             if (result) {
+                setFromData(initialState);
                 setLoading(false);
                 const { status, records } = result?.response;
-                if (status?.code === 200) {
-                    console.log(records);
+                console.log(records);
+                if (status?.code === 20) {
                 } else {
                     toast.error(status?.message);
                 }
@@ -275,7 +276,13 @@ const Register = () => {
                                             disabled={loading}
                                             className='bg-green text-white transition-all rounded-sm hover:bg-black px-6 w-full lg:w-[473px] lg:px-0 py-3'
                                         >
-                                            {loading ? <Spinner /> : "Register"}
+                                            <div className='flex justify-center items-center'>
+                                                {loading ? (
+                                                    <Spinner />
+                                                ) : (
+                                                    "Register"
+                                                )}
+                                            </div>
                                         </button>
                                     </li>
                                 </ul>
