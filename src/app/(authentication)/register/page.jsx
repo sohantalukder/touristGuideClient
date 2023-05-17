@@ -11,6 +11,7 @@ import { mutation } from "../../utilities/apiRequest/apiRequest";
 import { BASE_API_URL } from "../../../../config";
 import { toast } from "react-hot-toast";
 import Spinner from "../../utilities/spinner/Spinner";
+import { useRouter } from "next/navigation";
 const initialState = {
     name: "",
     email: "",
@@ -45,7 +46,7 @@ const Register = () => {
             cPassword: errorCPassword,
         });
     };
-
+    const { push } = useRouter();
     const onSubmit = async (e) => {
         e.preventDefault();
         const { email, password, name, cPassword } = fromData;
@@ -63,8 +64,11 @@ const Register = () => {
                 setFromData(initialState);
                 setLoading(false);
                 const { status, records } = result?.response;
-                console.log(records);
-                if (status?.code === 20) {
+                if (status?.code === 202) {
+                    toast.loading(status?.message);
+                    push("/otpVerification", {
+                        data: records,
+                    });
                 } else {
                     toast.error(status?.message);
                 }

@@ -3,8 +3,10 @@ import Image from "next/image";
 import React, { useState } from "react";
 import OTPInput from "react-otp-input";
 import logo from "../../assets/logo/Black logo.svg";
-const page = () => {
+import { useParams } from "next/navigation";
+const page = (props) => {
     const [otp, setOtp] = useState("");
+    const params = useParams();
     return (
         <div className='container mx-auto max-w-[1180px] px-4 lg:px-6 py-16   flex items-center justify-center'>
             <div className=' bg-white w-[400px] md:w-[500px] lg:w-[600px] py-10 px-16 rounded-md mx-auto shadow-custom'>
