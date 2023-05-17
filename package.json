@@ -20,6 +20,7 @@
         "next-auth": "^4.22.1",
         "postcss": "8.4.23",
         "react": "18.2.0",
+        "react-countup": "^6.4.2",
         "react-dom": "18.2.0",
         "react-google-flight-datepicker": "^0.1.20",
         "react-hook-form": "^7.43.9",
@@ -28,6 +29,8 @@
         "react-otp-input": "^3.0.2",
         "react-redux": "^8.0.5",
         "react-search-autocomplete": "^8.5.2",
+        "react-stars-display": "^0.1.24",
+        "react-visibility-sensor": "^5.1.1",
         "swiper": "^9.3.1",
         "tailwindcss": "3.3.2"
     },
