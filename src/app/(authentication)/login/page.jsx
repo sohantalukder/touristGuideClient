@@ -6,7 +6,6 @@ import loginImage from "../../assets/sign-in-illustration.svg";
 import Link from "next/link";
 import Image from "next/image";
 import CustomInput from "../../components/CustomInput/CustomInput";
-import { handleSetInfo } from "../../utilities/handleFromData/handleFromData";
 import { useLoginMutation } from "../../redux/slice/authentication/authApi";
 import Spinner from "../../utilities/spinner/Spinner";
 import { toast } from "react-hot-toast";
@@ -15,72 +14,62 @@ import { BASE_API_URL } from "../../../../config";
 import { useDispatch } from "react-redux";
 import { userLoggedIn } from "../../redux/slice/authentication/authSlice";
 import { query, mutation } from "../../utilities/apiRequest/apiRequest";
-const initialState = {
+import { useFormik } from "formik";
+import { loginSchema } from "../../schemas";
+const initialValues = {
     email: "",
     password: "",
 };
-const initialError = {
-    email: false,
-    password: false,
-};
+
 const Login = () => {
-    const [fromData, setFromData] = useState(initialState);
-    const [error, setError] = useState(initialError);
-    const [emailError, setEmailError] = useState(false);
     const dispatch = useDispatch();
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
     };
     const [login, { isLoading, error: isError }] = useLoginMutation();
-    const handleError = () => {
-        const { email, password } = fromData;
-        const errorEmail = email === "" ? true : false;
-        const errorPassword = password === "" ? true : false;
-        setError({
-            ...error,
-            email: errorEmail,
-            password: errorPassword,
-        });
-    };
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        const { email, password } = fromData;
-        if (email && password && !isLoading) {
-            const result = await login({
-                email,
-                password,
-            });
-            const { status } = result?.data?.response || {};
-            if (status?.code === 200) {
-                toast.success("Successfully logged in");
-            }
-            return;
-        }
-        handleError();
-    };
-    useEffect(() => {
-        isError && toast.error(isError.data?.response?.status?.message);
-    }, [isError]);
-    const googleSignIn = useGoogleLogin({
-        onSuccess: async (tokenResponse) => {
-            const userInfo = await query(
-                "https://www.googleapis.com/oauth2/v3/userinfo",
-                "GET",
-                tokenResponse?.access_token
-            );
-            const getLogin = await mutation(
-                `${BASE_API_URL}/auth/googleLogin`,
-                "POST",
-                userInfo
-            );
-            dispatch(
-                userLoggedIn({
-                    user: getLogin?.response?.records,
-                })
-            );
+    const { values, handleChange, handleSubmit, errors, touched } = useFormik({
+        initialValues,
+        validationSchema: loginSchema,
+        validateOnChange: true,
+        validateOnBlur: false,
+        onSubmit: (values, action) => {
+            console.log("🚀 ~ file: App.jsx ~ line 17 ~ App ~ values", values);
+            // const result = await login({
+            //     email,
+            //     password,
+            // });
+            // const { status } = result?.data?.response || {};
+            // if (status?.code === 200) {
+            //     toast.success("Successfully logged in");
+            // }
+            // return;
+            action.resetForm();
         },
     });
+    // useEffect(() => {
+    //     isError && toast.error(isError.data?.response?.status?.message);
+    // }, [isError]);
+    // const googleSignIn = useGoogleLogin({
+    //     onSuccess: async (tokenResponse) => {
+    //         const userInfo = await query(
+    //             "https://www.googleapis.com/oauth2/v3/userinfo",
+    //             "GET",
+    //             tokenResponse?.access_token
+    //         );
+    //         const getLogin = await mutation(
+    //             `${BASE_API_URL}/auth/googleLogin`,
+    //             "POST",
+    //             userInfo
+    //         );
+    //         dispatch(
+    //             userLoggedIn({
+    //                 user: getLogin?.response?.records,
+    //             })
+    //         );
+    //     },
+    // });
+    console.log(touched);
     return (
         <div>
             <div className='container mx-auto max-w-[1180px] px-4 lg:px-0 py-16'>
@@ -111,7 +100,7 @@ const Login = () => {
                                     Log In
                                 </h1>
                                 <form
-                                    onSubmit={onSubmit}
+                                    onSubmit={handleSubmit}
                                     className=' space-y-5'
                                 >
                                     <div className='space-y-5'>
@@ -121,32 +110,16 @@ const Login = () => {
                                                     label='Email'
                                                     required
                                                     placeholder='Email'
-                                                    name={"name"}
-                                                    value={fromData.email}
-                                                    onChange={(text) =>
-                                                        handleSetInfo(
-                                                            "email",
-                                                            text,
-                                                            setFromData,
-                                                            fromData,
-                                                            setError,
-                                                            error,
-                                                            setEmailError
-                                                        )
-                                                    }
+                                                    name={"email"}
+                                                    value={values.email}
+                                                    onChange={handleChange}
                                                     isError={
-                                                        (emailError &&
-                                                            fromData.email) ||
-                                                        (error.email &&
-                                                            !fromData.email)
+                                                        errors.email &&
+                                                        touched.email
                                                     }
                                                     error={
-                                                        (emailError &&
-                                                            fromData.email &&
-                                                            "Your email is not valid.") ||
-                                                        (error.email &&
-                                                            !fromData.email &&
-                                                            "This field is required.")
+                                                        touched.email &&
+                                                        errors.email
                                                     }
                                                 />
                                             </li>
@@ -157,25 +130,15 @@ const Login = () => {
                                                     type='password'
                                                     placeholder='Password'
                                                     name={"password"}
-                                                    value={fromData.password}
-                                                    onChange={(text) =>
-                                                        handleSetInfo(
-                                                            "password",
-                                                            text,
-                                                            setFromData,
-                                                            fromData,
-                                                            setError,
-                                                            error
-                                                        )
-                                                    }
+                                                    value={values.password}
+                                                    onChange={handleChange}
                                                     isError={
-                                                        error.password &&
-                                                        !fromData.password
+                                                        errors.password &&
+                                                        touched.password
                                                     }
                                                     error={
-                                                        error.password &&
-                                                        !fromData.password &&
-                                                        "This field is required!"
+                                                        errors.password &&
+                                                        touched.password
                                                     }
                                                     passwordShown={
                                                         passwordShown

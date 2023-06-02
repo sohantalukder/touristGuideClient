@@ -55,7 +55,7 @@ const CustomInput = ({
                 maxLength={maxLength}
                 minLength={minLength}
                 disabled={editable}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={onChange}
             />
             {leftIcon}
             {isError && error && (
