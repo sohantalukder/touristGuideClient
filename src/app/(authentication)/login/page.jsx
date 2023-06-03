@@ -16,19 +16,27 @@ import { userLoggedIn } from "../../redux/slice/authentication/authSlice";
 import { query, mutation } from "../../utilities/apiRequest/apiRequest";
 import { useFormik } from "formik";
 import { loginSchema } from "../../schemas";
+<<<<<<< HEAD
 import { useRouter } from "next/navigation";
+=======
+>>>>>>> dev
 const initialValues = {
     email: "",
     password: "",
 };
 
 const Login = () => {
+<<<<<<< HEAD
     const router = useRouter();
+=======
+    const dispatch = useDispatch();
+>>>>>>> dev
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
     };
     const [login, { isLoading, error: isError }] = useLoginMutation();
+<<<<<<< HEAD
     const { user } = useSelector((state) => state.auth) || {};
     const dispatch = useDispatch();
     const { values, handleChange, handleSubmit, handleBlur, errors, touched } =
@@ -75,8 +83,50 @@ const Login = () => {
                     user: getLogin?.response?.records,
                 })
             );
+=======
+    const { values, handleChange, handleSubmit, errors, touched } = useFormik({
+        initialValues,
+        validationSchema: loginSchema,
+        validateOnChange: true,
+        validateOnBlur: false,
+        onSubmit: (values, action) => {
+            console.log("🚀 ~ file: App.jsx ~ line 17 ~ App ~ values", values);
+            // const result = await login({
+            //     email,
+            //     password,
+            // });
+            // const { status } = result?.data?.response || {};
+            // if (status?.code === 200) {
+            //     toast.success("Successfully logged in");
+            // }
+            // return;
+            action.resetForm();
+>>>>>>> dev
         },
     });
+    // useEffect(() => {
+    //     isError && toast.error(isError.data?.response?.status?.message);
+    // }, [isError]);
+    // const googleSignIn = useGoogleLogin({
+    //     onSuccess: async (tokenResponse) => {
+    //         const userInfo = await query(
+    //             "https://www.googleapis.com/oauth2/v3/userinfo",
+    //             "GET",
+    //             tokenResponse?.access_token
+    //         );
+    //         const getLogin = await mutation(
+    //             `${BASE_API_URL}/auth/googleLogin`,
+    //             "POST",
+    //             userInfo
+    //         );
+    //         dispatch(
+    //             userLoggedIn({
+    //                 user: getLogin?.response?.records,
+    //             })
+    //         );
+    //     },
+    // });
+    console.log(touched);
     return (
         <div>
             <div className='container mx-auto max-w-[1180px] px-4 lg:px-0 py-16'>
@@ -120,7 +170,10 @@ const Login = () => {
                                                     name={"email"}
                                                     value={values.email}
                                                     onChange={handleChange}
+<<<<<<< HEAD
                                                     onBlur={handleBlur}
+=======
+>>>>>>> dev
                                                     isError={
                                                         errors.email &&
                                                         touched.email
@@ -140,14 +193,22 @@ const Login = () => {
                                                     name={"password"}
                                                     value={values.password}
                                                     onChange={handleChange}
+<<<<<<< HEAD
                                                     onBlur={handleBlur}
+=======
+>>>>>>> dev
                                                     isError={
                                                         errors.password &&
                                                         touched.password
                                                     }
                                                     error={
+<<<<<<< HEAD
                                                         touched.password &&
                                                         errors.password
+=======
+                                                        errors.password &&
+                                                        touched.password
+>>>>>>> dev
                                                     }
                                                     passwordShown={
                                                         passwordShown
