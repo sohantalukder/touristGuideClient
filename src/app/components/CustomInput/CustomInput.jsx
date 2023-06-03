@@ -57,10 +57,7 @@ const CustomInput = ({
                 minLength={minLength}
                 disabled={editable}
                 onChange={onChange}
-<<<<<<< HEAD
                 onBlur={onBlur}
-=======
->>>>>>> dev
             />
             {leftIcon}
             {isError && error && (
