@@ -21,6 +21,7 @@ const CustomInput = ({
     passwordShown,
     maxLength = "",
     minLength = "",
+    onBlur,
 }) => {
     return (
         <>
@@ -55,12 +56,13 @@ const CustomInput = ({
                 maxLength={maxLength}
                 minLength={minLength}
                 disabled={editable}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={onChange}
+                onBlur={onBlur}
             />
             {leftIcon}
             {isError && error && (
                 <p className='text-red pt-1 text-left text-sm '>
-                    {error?.trim()}
+                    {error?.trim()?.charAt(0).toUpperCase() + error.slice(1)}
                 </p>
             )}
         </>
