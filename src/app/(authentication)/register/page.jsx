@@ -5,86 +5,65 @@ import { FcGoogle } from "react-icons/fc";
 import loginImage from "../../assets/sign-in-illustration.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { handleSetInfo } from "../../utilities/handleFromData/handleFromData";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import { mutation } from "../../utilities/apiRequest/apiRequest";
 import { BASE_API_URL } from "../../../../config";
 import { toast } from "react-hot-toast";
 import Spinner from "../../utilities/spinner/Spinner";
 import { useRouter } from "next/navigation";
-const initialState = {
+import { useFormik } from "formik";
+import { useSelector } from "react-redux";
+import { registerSchema } from "../../schemas";
+const initialValues = {
     name: "",
     email: "",
     password: "",
-    cPassword: "",
+    confirm_password: "",
 };
-const initialError = {
-    name: false,
-    email: false,
-    password: false,
-    cPassword: false,
-};
+
 const Register = () => {
     const [passwordShown, setPasswordShown] = useState(false);
     const [cPasswordShown, setCPasswordShown] = useState(false);
-    const [fromData, setFromData] = useState(initialState);
-    const [error, setError] = useState(initialError);
-    const [emailError, setEmailError] = useState(false);
-    const [matchPassword, setMatchPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const handleError = () => {
-        const { email, password, name, cPassword } = fromData;
-        const errorEmail = email === "" ? true : false;
-        const errorName = name === "" ? true : false;
-        const errorPassword = password === "" ? true : false;
-        const errorCPassword = cPassword === "" ? true : false;
-        setError({
-            ...error,
-            name: errorName,
-            email: errorEmail,
-            password: errorPassword,
-            cPassword: errorCPassword,
-        });
-    };
+
     const { push } = useRouter();
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        const { email, password, name, cPassword } = fromData;
-        if (email && password && name && cPassword && !loading) {
-            if (cPassword !== password) {
-                setMatchPassword(true);
-                return;
-            }
-            setLoading(true);
-            setMatchPassword(false);
-            const URL = `${BASE_API_URL}/auth/register`;
-            const obj = { email, password, name };
-            const result = await mutation(URL, "POST", obj);
-            if (result) {
-                setFromData(initialState);
-                setLoading(false);
-                const { status, records } = result?.response;
-                if (status?.code === 202) {
-                    toast.loading(status?.message);
-                    push("/otpVerification", {
-                        data: records,
-                    });
-                } else {
-                    toast.error(status?.message);
-                }
-            }
-        }
-        handleError();
-    };
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
     };
     const toggleCPassword = () => {
         setCPasswordShown(!cPasswordShown);
     };
+    const { user } = useSelector((state) => state.auth) || {};
+    const { values, handleChange, handleSubmit, handleBlur, errors, touched } =
+        useFormik({
+            initialValues,
+            validationSchema: registerSchema,
+            validateOnChange: true,
+            validateOnBlur: false,
+            onSubmit: async (values, action) => {
+                const { name, email, password } = values;
+                setLoading(true);
+                const URL = `${BASE_API_URL}/auth/register`;
+                const obj = { email, password, name };
+                const result = await mutation(URL, "POST", obj);
+                if (result) {
+                    setLoading(false);
+                    const { status, records } = result?.response;
+                    if (status?.code === 201) {
+                        toast.loading(status?.message);
+                        push("/otpVerification", {
+                            data: records,
+                        });
+                        action?.resetForm();
+                    } else {
+                        toast.error(status?.message);
+                    }
+                }
+            },
+        });
     useEffect(() => {
-        fromData.password === fromData.cPassword && setMatchPassword(false);
-    }, [fromData.password, fromData.cPassword]);
+        user?.token && router.push("/");
+    }, [user]);
     const handleGoogleSignIn = () => {};
 
     return (
@@ -114,7 +93,7 @@ const Register = () => {
                             <h1 className='text-2xl text-green font-bold'>
                                 Register
                             </h1>
-                            <form onSubmit={onSubmit}>
+                            <form onSubmit={handleSubmit}>
                                 <ul className='w-full lg:w-[473px] space-y-5 mx-auto'>
                                     <li className='flex flex-col items-start'>
                                         <CustomInput
@@ -122,26 +101,14 @@ const Register = () => {
                                             required
                                             placeholder='Name'
                                             name={"name"}
-                                            value={fromData.name}
+                                            value={values.name}
                                             maxLength='32'
-                                            onChange={(text) =>
-                                                handleSetInfo(
-                                                    "name",
-                                                    text,
-                                                    setFromData,
-                                                    fromData,
-                                                    setError,
-                                                    error
-                                                )
-                                            }
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
                                             isError={
-                                                error.name && !fromData.name
+                                                errors.name && touched.name
                                             }
-                                            error={
-                                                error.name &&
-                                                !fromData.name &&
-                                                "This field is required."
-                                            }
+                                            error={touched.name && errors.name}
                                         />
                                     </li>
                                     <li className='flex flex-col items-start'>
@@ -149,31 +116,15 @@ const Register = () => {
                                             label='Email'
                                             required
                                             placeholder='Email'
-                                            name={"name"}
-                                            value={fromData.email}
-                                            onChange={(text) =>
-                                                handleSetInfo(
-                                                    "email",
-                                                    text,
-                                                    setFromData,
-                                                    fromData,
-                                                    setError,
-                                                    error,
-                                                    setEmailError
-                                                )
-                                            }
+                                            name={"email"}
+                                            value={values.email}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
                                             isError={
-                                                (emailError &&
-                                                    fromData.email) ||
-                                                (error.email && !fromData.email)
+                                                errors.email && touched.email
                                             }
                                             error={
-                                                (emailError &&
-                                                    fromData.email &&
-                                                    "Your email is not valid.") ||
-                                                (error.email &&
-                                                    !fromData.email &&
-                                                    "This field is required.")
+                                                touched.email && errors.email
                                             }
                                         />
                                     </li>
@@ -185,27 +136,17 @@ const Register = () => {
                                             type='password'
                                             placeholder='Password'
                                             name={"password"}
-                                            minLength='8'
-                                            value={fromData.password}
-                                            onChange={(text) =>
-                                                handleSetInfo(
-                                                    "password",
-                                                    text,
-                                                    setFromData,
-                                                    fromData,
-                                                    setError,
-                                                    error
-                                                )
-                                            }
+                                            minLength='6'
+                                            value={values.password}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
                                             isError={
-                                                matchPassword ||
-                                                (error.password &&
-                                                    !fromData.password)
+                                                errors.password &&
+                                                touched.password
                                             }
                                             error={
-                                                error.password &&
-                                                !fromData.password &&
-                                                "This field is required!"
+                                                touched.password &&
+                                                errors.password
                                             }
                                             passwordShown={passwordShown}
                                             leftIcon={
@@ -229,30 +170,18 @@ const Register = () => {
                                             required
                                             type='password'
                                             placeholder='Password'
-                                            minLength='8'
-                                            name={"password"}
-                                            value={fromData.cPassword}
-                                            onChange={(text) =>
-                                                handleSetInfo(
-                                                    "cPassword",
-                                                    text,
-                                                    setFromData,
-                                                    fromData,
-                                                    setError,
-                                                    error
-                                                )
-                                            }
+                                            minLength='6'
+                                            name={"confirm_password"}
+                                            value={values.confirm_password}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
                                             isError={
-                                                matchPassword ||
-                                                (error.password &&
-                                                    !fromData.password)
+                                                errors.confirm_password &&
+                                                touched.confirm_password
                                             }
                                             error={
-                                                (matchPassword &&
-                                                    "Password did not match.") ||
-                                                (error.cPassword &&
-                                                    !fromData.cPassword &&
-                                                    "This field is required!")
+                                                touched.confirm_password &&
+                                                errors.confirm_password
                                             }
                                             passwordShown={cPasswordShown}
                                             leftIcon={
