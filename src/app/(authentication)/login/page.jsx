@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
-import { FcGoogle } from "react-icons/fc";
 import loginImage from "../../assets/sign-in-illustration.svg";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,14 +8,11 @@ import CustomInput from "../../components/CustomInput/CustomInput";
 import { useLoginMutation } from "../../redux/slice/authentication/authApi";
 import Spinner from "../../utilities/spinner/Spinner";
 import { toast } from "react-hot-toast";
-import { useGoogleLogin } from "@react-oauth/google";
-import { BASE_API_URL } from "../../../../config";
-import { useDispatch, useSelector } from "react-redux";
-import { userLoggedIn } from "../../redux/slice/authentication/authSlice";
-import { query, mutation } from "../../utilities/apiRequest/apiRequest";
 import { useFormik } from "formik";
 import { loginSchema } from "../../schemas";
 import { useRouter } from "next/navigation";
+import GoogleSignIn from "../../components/googleSignIn/googleSignIn";
+import { useSelector } from "react-redux";
 const initialValues = {
     email: "",
     password: "",
@@ -30,7 +26,6 @@ const Login = () => {
     };
     const [login, { isLoading, error: isError }] = useLoginMutation();
     const { user } = useSelector((state) => state.auth) || {};
-    const dispatch = useDispatch();
     const { values, handleChange, handleSubmit, handleBlur, errors, touched } =
         useFormik({
             initialValues,
@@ -58,25 +53,7 @@ const Login = () => {
     useEffect(() => {
         user?.token && router.push("/");
     }, [user]);
-    const googleSignIn = useGoogleLogin({
-        onSuccess: async (tokenResponse) => {
-            const userInfo = await query(
-                "https://www.googleapis.com/oauth2/v3/userinfo",
-                "GET",
-                tokenResponse?.access_token
-            );
-            const getLogin = await mutation(
-                `${BASE_API_URL}/auth/googleLogin`,
-                "POST",
-                userInfo
-            );
-            dispatch(
-                userLoggedIn({
-                    user: getLogin?.response?.records,
-                })
-            );
-        },
-    });
+
     return (
         <div>
             <div className='container mx-auto max-w-[1180px] px-4 lg:px-0 py-16'>
@@ -199,15 +176,7 @@ const Login = () => {
                                     </p>
                                     <div className=' w-1/4 lg:w-1/3 border border-mediumGray'></div>
                                 </div>
-                                <div className='flex justify-center items-center'>
-                                    <button
-                                        onClick={() => googleSignIn()}
-                                        className='border border-mediumGray py-3 px-6 w-full lg:w-[473px] lg:px-0 flex justify-center items-center'
-                                    >
-                                        <FcGoogle className='mr-2 text-2xl' />
-                                        Sign up with Google
-                                    </button>
-                                </div>
+                                <GoogleSignIn />
                                 <div>
                                     <p>
                                         Don't have account?{" "}
