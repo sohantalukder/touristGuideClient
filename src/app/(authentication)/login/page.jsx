@@ -92,7 +92,6 @@ const Login = () => {
                                             <li className='flex flex-col items-start relative'>
                                                 <CustomInput
                                                     label='Email'
-                                                    required
                                                     placeholder='Email'
                                                     name={"email"}
                                                     value={values.email}
@@ -111,7 +110,6 @@ const Login = () => {
                                             <li className='flex flex-col items-start relative'>
                                                 <CustomInput
                                                     label='Password'
-                                                    required
                                                     type='password'
                                                     placeholder='Password'
                                                     name={"password"}

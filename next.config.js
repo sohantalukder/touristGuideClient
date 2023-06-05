@@ -5,6 +5,9 @@ const nextConfig = {
     env: {
         customKey: "my-value",
     },
+    experimental: {
+        appDir: true,
+    },
 };
 
 module.exports = nextConfig;

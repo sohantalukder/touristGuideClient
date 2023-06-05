@@ -3,8 +3,8 @@ import { Listbox, Transition } from "@headlessui/react";
 import React, { Fragment, useRef, useState } from "react";
 import { BiCloudUpload } from "react-icons/bi";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import Background from "../../../../assets/feedback/main2.svg";
-import DropDown from "@/components/Dropdown/Dropdown";
+import Background from "../../../assets/feedback/main2.svg";
+import DropDown from "../../../components/Dropdown/Dropdown";
 import Link from "next/link";
 const categories = [
     {
