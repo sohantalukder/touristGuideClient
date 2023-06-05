@@ -4,9 +4,6 @@ import React, { useState } from "react";
 import OTPInput from "react-otp-input";
 import logo from "../../assets/logo/Black logo.svg";
 import { useParams } from "next/navigation";
-export const metadata = {
-    title: "Login",
-};
 const page = (props) => {
     const [otp, setOtp] = useState("");
     const params = useParams();
