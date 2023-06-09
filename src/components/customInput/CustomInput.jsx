@@ -12,7 +12,6 @@ const CustomInput = ({
     label = "",
     labelStyle = "",
     required = false,
-    id = "",
     ref,
     editable = false,
     value,
@@ -47,7 +46,7 @@ const CustomInput = ({
                 }
                 `}
                 ref={ref}
-                id={id}
+                id={name}
                 value={value}
                 required={required}
                 placeholder={placeholder}
