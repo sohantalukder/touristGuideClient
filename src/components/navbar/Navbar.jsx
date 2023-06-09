@@ -163,6 +163,21 @@ const NavBar = () => {
                                                 <span></span>
                                                 <span></span>
                                             </button>
+                                            {user?.name ? (
+                                                <Link
+                                                    className='btn-theme hidden md:block btn-two'
+                                                    to='/profile'
+                                                >
+                                                    {user?.name}
+                                                </Link>
+                                            ) : (
+                                                <Link
+                                                    className='btn-theme hidden md:block btn-two'
+                                                    to='/login'
+                                                >
+                                                    Log In
+                                                </Link>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -198,8 +213,10 @@ const NavBar = () => {
                                     </button>
                                 </div>
                             </div>
-
-                            <div className='off-canvas-item'>
+                            <div
+                                className='off-canvas-item'
+                                onClick={() => handleShowMenu(false)}
+                            >
                                 <div className='res-mobile-menu menu-active-one'>
                                     <div className='slicknav_menu'>
                                         <ul
@@ -208,22 +225,10 @@ const NavBar = () => {
                                             aria-hidden='true'
                                         >
                                             <li>
-                                                <Link
-                                                    href='/'
-                                                    onClick={() =>
-                                                        handleShowMenu(false)
-                                                    }
-                                                >
-                                                    Home
-                                                </Link>
+                                                <Link href='/'>Home</Link>
                                             </li>
                                             <li>
-                                                <Link
-                                                    href='/destinations'
-                                                    onClick={() =>
-                                                        handleShowMenu(false)
-                                                    }
-                                                >
+                                                <Link href='/destinations'>
                                                     Destinations
                                                 </Link>
                                             </li>
