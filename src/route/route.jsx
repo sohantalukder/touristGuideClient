@@ -4,7 +4,7 @@ import {
     createRoutesFromElements,
 } from "react-router-dom";
 import Login from "../authentication/login/Login";
-import Register from "../authentication/register/register";
+import Register from "../authentication/register/Register";
 import OTPVerification from "../authentication/otp/OTPVerification";
 import App from "../App";
 
