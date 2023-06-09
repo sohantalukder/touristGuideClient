@@ -7,7 +7,7 @@ import Footer from "./components/footer/Footer.jsx";
 function App() {
     return (
         <>
-            {/* <NavBar /> */}
+            <NavBar />
             {<Outlet />}
             <Toaster
                 position='bottom-center'
