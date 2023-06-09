@@ -44,21 +44,21 @@ const NavProfileInfo = ({ user }) => {
                 </div>
                 <div className='flex flex-col gap-4 px-4 pt-4'>
                     <Link
-                        className='!text-black !ml-0 flex gap-5 items-center text-sm text-medium hover:!bg-transparent'
+                        className='!text-black !ml-0 flex gap-5 items-center text-sm text-medium hover:!bg-transparent w-full'
                         to='/profile'
                     >
                         <AccountIcon />
                         <span>View Profile</span>
                     </Link>
                     <Link
-                        className='!text-black !ml-0 flex gap-5 items-center hover:!bg-transparent'
+                        className='!text-black !ml-0 flex gap-5 items-center hover:!bg-transparent w-full'
                         to='/blog'
                     >
                         <FaBlog className='text-black' />
                         <span>View Blog</span>
                     </Link>
                     <Link
-                        className='!text-black !ml-0 flex gap-5 items-center hover:!bg-transparent'
+                        className='!text-black !ml-0 flex gap-5 items-center hover:!bg-transparent w-full'
                         to='/event'
                     >
                         <SiEventstore className='text-black' />
@@ -67,7 +67,7 @@ const NavProfileInfo = ({ user }) => {
                 </div>
                 <hr className='my-5 border-mediumGray w-ful h-px' />
                 <button
-                    className='!text-black !ml-0 flex gap-5 px-4 pb-4 hover:!bg-transparent'
+                    className='!text-black !ml-0 flex gap-5 px-4 pb-4 hover:!bg-transparent w-full'
                     onClick={() => logOut()}
                 >
                     <BiLogOut className='text-black' />

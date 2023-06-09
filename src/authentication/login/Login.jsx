@@ -10,7 +10,7 @@ import Spinner from "../../components/spinner/Spinner";
 import Image from "../../components/image/Image";
 import CustomInput from "../../components/customInput/CustomInput";
 import { useLoginMutation } from "../../redux/slice/authentication/authApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SEO from "../../utils/seo/SEO";
 const initialValues = {
     email: "",
@@ -18,6 +18,7 @@ const initialValues = {
 };
 
 const Login = () => {
+    const navigate = useNavigate();
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
@@ -39,9 +40,14 @@ const Login = () => {
                 const { status } = result?.data?.response || {};
                 if (status?.code === 200) {
                     toast.success("Successfully logged in");
-                    // router.push("/");
+                    navigate(-1);
                     action.resetForm();
+                } else if (status?.code === 202) {
+                    navigate("/otp");
+                    action.resetForm();
+                    toast.loading(status?.message);
                 }
+
                 return;
             },
         });
@@ -49,7 +55,7 @@ const Login = () => {
         isError && toast.error(isError.data?.response?.status?.message);
     }, [isError]);
     useEffect(() => {
-        // user?.token && router.push("/");
+        user?.token && navigate("/");
     }, [user]);
     return (
         <div>
