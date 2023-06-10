@@ -187,7 +187,7 @@ const Login = () => {
                                     <p>
                                         Don't have account?{" "}
                                         <Link
-                                            href='/register'
+                                            to='/register'
                                             className='text-green hover:underline'
                                         >
                                             Register

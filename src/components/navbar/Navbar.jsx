@@ -34,7 +34,9 @@ const NavBar = () => {
     const { user: userData } = useSelector((state) => state.auth);
     const [user, setUser] = useState({});
     useEffect(() => {
-        setUser(userData);
+        if (userData) {
+            setUser(userData);
+        }
     }, [userData]);
     const links = [
         {

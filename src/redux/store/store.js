@@ -6,7 +6,7 @@ import { production_mode } from "../../../config";
 
 const userInfoFromStorage = Cookies.get("auth")
     ? JSON.parse(Cookies.get("auth"))
-    : null;
+    : {};
 
 const preloadedState = {
     auth: userInfoFromStorage,

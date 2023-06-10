@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-const initialState = { user: undefined };
+const initialState = { user: {} };
 
 const authSlice = createSlice({
     name: "auth",
