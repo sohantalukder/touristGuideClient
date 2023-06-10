@@ -37,13 +37,13 @@ const Login = () => {
                     email,
                     password,
                 });
-                const { status } = result?.data?.response || {};
+                const { status, records } = result?.data?.response || {};
                 if (status?.code === 200) {
                     toast.success("Successfully logged in");
                     navigate(-1);
                     action.resetForm();
                 } else if (status?.code === 202) {
-                    navigate("/otp");
+                    navigate("/otp", { state: { data: records } });
                     action.resetForm();
                     toast.loading(status?.message);
                 }

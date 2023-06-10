@@ -1789,3 +1789,6 @@ body {
     transform: translate3d(0, -5px, 0);
     background-color: #081828;
 }
+.shadow-custom {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}

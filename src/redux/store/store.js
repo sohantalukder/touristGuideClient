@@ -9,7 +9,7 @@ const userInfoFromStorage = Cookies.get("auth")
     : null;
 
 const preloadedState = {
-    auth: { user: userInfoFromStorage },
+    auth: { user: userInfoFromStorage ? userInfoFromStorage : null },
 };
 export const store = configureStore({
     preloadedState,

@@ -12,7 +12,7 @@ export const authApi = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 try {
                     const result = await queryFulfilled;
-                    if (result) {
+                    if (result?.data?.response?.status?.code === 200) {
                         Cookies.set(
                             "auth",
                             JSON.stringify(result?.data?.response?.records),
