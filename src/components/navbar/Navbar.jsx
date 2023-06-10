@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { BiSearch } from "react-icons/bi";
-import { IoMdSearch } from "react-icons/io";
 import { VscChromeMinimize, VscClose } from "react-icons/vsc";
 import logo from "../../assets/logo/Black logo.svg";
 import { useSelector } from "react-redux";
 import Image from "../image/Image";
 import { Link } from "react-router-dom";
+import ScreenNav from "./components/ScreenNav";
 const NavBar = () => {
-    const [show, setShow] = useState(false);
-    const handleShow = (e) => setShow(e);
     const [showMenu, setShowMenu] = useState(false);
     const handleShowMenu = (e) => {
         setShowMenu(e);
@@ -97,90 +94,13 @@ const NavBar = () => {
                                         </Link>
                                     </div>
                                 </div>
-                                <div className='col-span-5 sm:col-span-8 md:col-span-8 lg:col-span-10'>
-                                    <div className='header-align'>
-                                        <div className='header-navigation-area navigation-style-two'>
-                                            <ul className='main-menu flex flex-wrap pl-0 mb-0  justify-center'>
-                                                {links.map((item, index) => {
-                                                    return (
-                                                        <li
-                                                            key={index}
-                                                            className='has-submenu'
-                                                        >
-                                                            {item?.subLinks
-                                                                ?.length > 0 ? (
-                                                                <>
-                                                                    <span>
-                                                                        {
-                                                                            item?.name
-                                                                        }
-                                                                    </span>
-                                                                    <ul className='submenu-nav'>
-                                                                        {item?.subLinks?.map(
-                                                                            (
-                                                                                item,
-                                                                                index
-                                                                            ) => {
-                                                                                return (
-                                                                                    <li
-                                                                                        key={
-                                                                                            index
-                                                                                        }
-                                                                                    >
-                                                                                        <Link
-                                                                                            to={`/$${item?.routeName}`}
-                                                                                        >
-                                                                                            {
-                                                                                                item?.name
-                                                                                            }
-                                                                                        </Link>
-                                                                                    </li>
-                                                                                );
-                                                                            }
-                                                                        )}
-                                                                    </ul>
-                                                                </>
-                                                            ) : (
-                                                                <Link
-                                                                    to={`/${item?.routeName}`}
-                                                                >
-                                                                    {item?.name}
-                                                                </Link>
-                                                            )}
-                                                        </li>
-                                                    );
-                                                })}
-                                            </ul>
-                                        </div>
-                                        <div className='header-action-area flex items-center'>
-                                            <button
-                                                className='btn-menu lg:hidden'
-                                                onClick={() =>
-                                                    handleShowMenu(true)
-                                                }
-                                            >
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </button>
-                                            {user?.name ? (
-                                                <Link
-                                                    className='btn-theme hidden md:block btn-two'
-                                                    to='/profile'
-                                                >
-                                                    {user?.name}
-                                                </Link>
-                                            ) : (
-                                                <Link
-                                                    className='btn-theme hidden md:block btn-two'
-                                                    to='/login'
-                                                >
-                                                    Log In
-                                                </Link>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
+                                {
+                                    <ScreenNav
+                                        links={links}
+                                        setShowMenu={setShowMenu}
+                                        user={user}
+                                    />
+                                }
                             </div>
                         </div>
                     </header>
@@ -358,12 +278,9 @@ const NavBar = () => {
                                         </ul>
                                     </div>
                                 </div>
-                                {/* <!-- End Mobile Menu Wrapper --> */}
                             </div>
-                            {/* <!-- Off Canvas Footer --> */}
                             <div className='off-canvas-footer'></div>
                         </div>
-                        {/* <!-- End Off Canvas Content Wrapper --> */}
                     </div>
                 </aside>
             </div>

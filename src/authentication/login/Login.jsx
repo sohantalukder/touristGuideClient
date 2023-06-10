@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
-import loginImage from "../../assets/svg/sign-in-illustration.svg";
+import { ReactComponent as LoginImage } from "../../assets/svg/sign-in-illustration.svg";
 import { toast } from "react-hot-toast";
 import { useFormik } from "formik";
 import { loginSchema } from "../../schemas";
 import { useSelector } from "react-redux";
 import GoogleLogin from "../../utils/googleLogin/GoogleLogin";
 import Spinner from "../../components/spinner/Spinner";
-import Image from "../../components/image/Image";
 import CustomInput from "../../components/customInput/CustomInput";
 import { useLoginMutation } from "../../redux/slice/authentication/authApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SEO from "../../utils/seo/SEO";
 const initialValues = {
     email: "",
@@ -18,6 +17,7 @@ const initialValues = {
 };
 
 const Login = () => {
+    const navigate = useNavigate();
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
@@ -36,12 +36,17 @@ const Login = () => {
                     email,
                     password,
                 });
-                const { status } = result?.data?.response || {};
+                const { status, records } = result?.data?.response || {};
                 if (status?.code === 200) {
                     toast.success("Successfully logged in");
-                    // router.push("/");
+                    navigate(-1);
                     action.resetForm();
+                } else if (status?.code === 202) {
+                    navigate("/otp", { state: { data: records } });
+                    action.resetForm();
+                    toast.loading(status?.message);
                 }
+
                 return;
             },
         });
@@ -49,7 +54,7 @@ const Login = () => {
         isError && toast.error(isError.data?.response?.status?.message);
     }, [isError]);
     useEffect(() => {
-        // user?.token && router.push("/");
+        user?.token && navigate("/");
     }, [user]);
     return (
         <div>
@@ -72,11 +77,7 @@ const Login = () => {
                                 very easily and let you enjoy the natural beauty
                                 of Bangladesh.
                             </p>
-                            <Image
-                                src={loginImage}
-                                priority={false}
-                                alt='loginSVG'
-                            />
+                            <LoginImage />
                         </div>
                     </div>
                     <div className='w-full lg:w-1/2'>
@@ -181,7 +182,7 @@ const Login = () => {
                                     <p>
                                         Don't have account?{" "}
                                         <Link
-                                            href='/register'
+                                            to='/register'
                                             className='text-green hover:underline'
                                         >
                                             Register

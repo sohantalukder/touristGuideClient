@@ -20,11 +20,7 @@ const GoogleLogin = () => {
                 "POST",
                 userInfo
             );
-            dispatch(
-                userLoggedIn({
-                    user: getLogin?.response?.records,
-                })
-            );
+            dispatch(userLoggedIn(getLogin?.response?.records));
         },
     });
     return (
