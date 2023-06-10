@@ -14,6 +14,7 @@ const OTPVerification = () => {
     const navigate = useNavigate();
     const [otp, setOtp] = useState("");
     const [loading, setLoading] = useState(false);
+    const [resendOTP, setResendOTP] = useState(false);
     const dispatch = useDispatch();
     useEffect(() => {
         if (!token || user?.token) {
@@ -22,25 +23,44 @@ const OTPVerification = () => {
     }, [token, user]);
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (otp?.length === 4) {
-            setLoading(true);
-            const URL = `${BASE_API_URL}/auth/emailVerification`;
-            const result = await mutation(URL, "POST", { otp: otp }, token);
-            if (result) {
-                setLoading(false);
-                const { status, records } = result?.response || {};
-                console.log(records);
-                if (status?.code === 200) {
-                    toast.success(status?.message);
-                    navigate("/");
-                    dispatch(userLoggedIn(records));
-                    setOtp("");
-                    return;
-                }
-                toast.error(status?.message);
-                setOtp("");
-            }
+        if (otp?.length !== 4) {
+            return;
         }
+        setLoading(true);
+        const result = await mutation(
+            `${BASE_API_URL}/auth/emailVerification`,
+            "POST",
+            { otp: otp },
+            token
+        );
+        if (!result) {
+            return;
+        }
+        setLoading(false);
+        const { status, records } = result?.response || {};
+        if (status?.code === 200) {
+            toast.success(status?.message);
+            navigate("/");
+            dispatch(userLoggedIn(records));
+            setOtp("");
+            return;
+        }
+
+        toast.error(status?.message);
+        setOtp("");
+    };
+    const resendOtp = async () => {
+        setResendOTP(true);
+        const URL = `${BASE_API_URL}/auth/resendVerifyOTP`;
+        const result = await query(URL, "GET", token);
+        if (!result) return;
+        setResendOTP(false);
+        const { status } = result?.response || {};
+        if (status?.code === 200) {
+            toast.success(status?.message);
+            return;
+        }
+        toast.error(status?.message);
     };
     return (
         <div className='container mx-auto max-w-[1180px] px-4 lg:px-6 py-16   flex items-center justify-center'>
@@ -74,12 +94,16 @@ const OTPVerification = () => {
                             {loading ? "Loading..." : "Submit"}
                         </button>
                     </form>
-                    <button className='text-black text-sm mt-5'>
+                    <div className='text-black text-sm mt-5'>
                         Don't get the code?{" "}
-                        <span className='text-green ml-0.5 font-semibold'>
+                        <button
+                            disabled={resendOTP}
+                            onClick={resendOtp}
+                            className='text-green ml-0.5 font-semibold'
+                        >
                             Resend
-                        </span>
-                    </button>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
