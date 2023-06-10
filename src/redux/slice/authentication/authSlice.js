@@ -18,7 +18,7 @@ const authSlice = createSlice({
             }
         },
         userLoggedOut: (state) => {
-            state.user = undefined;
+            state.user = {};
             Cookies.remove("auth");
         },
     },

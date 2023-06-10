@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
-import loginImage from "../../assets/svg/sign-in-illustration.svg";
+import { ReactComponent as LoginImage } from "../../assets/svg/sign-in-illustration.svg";
 import { toast } from "react-hot-toast";
 import { useFormik } from "formik";
 import { loginSchema } from "../../schemas";
 import { useSelector } from "react-redux";
 import GoogleLogin from "../../utils/googleLogin/GoogleLogin";
 import Spinner from "../../components/spinner/Spinner";
-import Image from "../../components/image/Image";
 import CustomInput from "../../components/customInput/CustomInput";
 import { useLoginMutation } from "../../redux/slice/authentication/authApi";
 import { Link, useNavigate } from "react-router-dom";
@@ -78,11 +77,7 @@ const Login = () => {
                                 very easily and let you enjoy the natural beauty
                                 of Bangladesh.
                             </p>
-                            <Image
-                                src={loginImage}
-                                priority={false}
-                                alt='loginSVG'
-                            />
+                            <LoginImage />
                         </div>
                     </div>
                     <div className='w-full lg:w-1/2'>
