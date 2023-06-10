@@ -13,21 +13,7 @@ export const authApi = apiSlice.injectEndpoints({
                 try {
                     const result = await queryFulfilled;
                     if (result?.data?.response?.status?.code === 200) {
-                        Cookies.set(
-                            "auth",
-                            JSON.stringify(result?.data?.response?.records),
-                            {
-                                expires: 7,
-                                secure: true,
-                                sameSite: "strict",
-                                path: "/",
-                            }
-                        );
-                        dispatch(
-                            userLoggedIn({
-                                user: result?.data?.response?.records,
-                            })
-                        );
+                        dispatch(userLoggedIn(result?.data?.response?.records));
                     }
                 } catch (e) {}
             },

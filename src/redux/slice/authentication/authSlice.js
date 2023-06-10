@@ -7,13 +7,15 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         userLoggedIn: (state, action) => {
-            state.user = action.payload.user;
-            Cookies.set("auth", JSON.stringify(action.payload.user), {
-                expires: 7,
-                secure: true,
-                sameSite: "strict",
-                path: "/",
-            });
+            if (action.payload) {
+                state.user = action.payload;
+                Cookies.set("auth", JSON.stringify(action.payload), {
+                    expires: 7,
+                    secure: true,
+                    sameSite: "strict",
+                    path: "/",
+                });
+            }
         },
         userLoggedOut: (state) => {
             state.user = undefined;
