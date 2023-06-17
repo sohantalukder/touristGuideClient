@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Image from "../../image/Image";
-import { IoIosArrowDown } from "react-icons/io";
 import NavLinks from "./NavLinks";
 import NavProfileInfo from "./NavProfileInfo";
 const ScreenNav = ({ user, setShowMenu, links }) => {
