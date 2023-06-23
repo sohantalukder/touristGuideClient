@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { links } from "../linksElement";
 
-const NavLinks = ({ links }) => {
+const NavLinks = () => {
     return (
         <ul className='main-menu flex flex-wrap pl-0 mb-0  justify-center'>
             {links.map((item, index) => {

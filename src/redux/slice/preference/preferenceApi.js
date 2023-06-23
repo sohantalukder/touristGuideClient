@@ -1,18 +1,17 @@
 import { apiSlice } from "../../api/apiSlice";
-import { userLoggedIn } from "./authSlice";
-export const authApi = apiSlice.injectEndpoints({
+import { preference } from "./preferenceSlice";
+export const preferenceApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        login: builder.mutation({
-            query: (data) => ({
-                url: "/auth/login",
-                method: "POST",
-                body: data,
+        preference: builder.mutation({
+            query: () => ({
+                url: "/preference",
+                method: "GET",
             }),
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 try {
                     const result = await queryFulfilled;
                     if (result?.data?.response?.status?.code === 200) {
-                        dispatch(userLoggedIn(result?.data?.response?.records));
+                        dispatch(preference(result?.data?.response?.records));
                     }
                 } catch (e) {}
             },
@@ -20,4 +19,4 @@ export const authApi = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { usePreferenceMutation } = preferenceApi;
