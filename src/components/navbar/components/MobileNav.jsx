@@ -3,13 +3,20 @@ import { Link } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
 import { VscChromeMinimize, VscClose } from "react-icons/vsc";
 import { links } from "../linksElement";
+import { useDispatch } from "react-redux";
+import { userLoggedOut } from "../../../redux/slice/authentication/authSlice";
 const MobileNav = ({ showMenu, handleShowMenu, user }) => {
     const [showLinks, setShowLinks] = useState("");
     const handleShowLink = (name) => {
         if (showLinks === name) setShowLinks("");
         else setShowLinks(name);
     };
-    const [showProfile, setShowProfile] = useState(false);
+    const dispatch = useDispatch();
+    const logOut = () => {
+        setShowLinks("");
+        handleShowMenu(false);
+        dispatch(userLoggedOut());
+    };
     return (
         <aside
             className={
@@ -110,19 +117,49 @@ const MobileNav = ({ showMenu, handleShowMenu, user }) => {
                                             <div className='w-full'>
                                                 <button
                                                     onClick={() =>
-                                                        setShowProfile(
-                                                            !showProfile
+                                                        handleShowLink(
+                                                            "profile"
                                                         )
                                                     }
                                                     className='flex justify-between w-full items-center'
                                                 >
                                                     <span>Profile</span>
-                                                    {!showProfile ? (
-                                                        <AiOutlinePlus />
-                                                    ) : (
+                                                    {showLinks === "profile" ? (
                                                         <VscChromeMinimize />
+                                                    ) : (
+                                                        <AiOutlinePlus />
                                                     )}
-                                                </button>
+                                                </button>{" "}
+                                                {showLinks === "profile" && (
+                                                    <div className='w-full'>
+                                                        <Link
+                                                            to='/profile'
+                                                            className='flex mt-2.5'
+                                                        >
+                                                            View Profile
+                                                        </Link>
+                                                        <Link
+                                                            to='/profile/event'
+                                                            className='flex mt-2.5'
+                                                        >
+                                                            View Blog
+                                                        </Link>
+                                                        <Link
+                                                            to='/profile/event'
+                                                            className='flex mt-2.5'
+                                                        >
+                                                            View Event
+                                                        </Link>
+                                                        <button
+                                                            onClick={() =>
+                                                                logOut()
+                                                            }
+                                                            className=' mt-2.5 bg-black w-full px-5 py-2 text-center text-white font-medium'
+                                                        >
+                                                            Logout
+                                                        </button>
+                                                    </div>
+                                                )}
                                             </div>
                                         ) : (
                                             <Link
