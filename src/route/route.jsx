@@ -8,10 +8,13 @@ import Register from "../authentication/register/Register";
 import OTPVerification from "../authentication/otp/OTPVerification";
 import App from "../App";
 import PrivateRoute from "../utils/privateRoute/PrivateRoute";
+import Home from "../page/user/home/Home";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path='/' element={<App />}>
+            <Route path='/' exact element={<Home />} />
+            <Route path='/home' element={<Home />} />
             <Route
                 path='/login'
                 element={
