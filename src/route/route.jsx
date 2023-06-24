@@ -9,22 +9,26 @@ import OTPVerification from "../authentication/otp/OTPVerification";
 import App from "../App";
 import PrivateRoute from "../utils/privateRoute/PrivateRoute";
 import Home from "../page/user/home/Home";
+import Profile from "../page/user/profile/Profile.";
+import NotFound from "../page/notFound/NotFound";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path='/' element={<App />}>
             <Route path='/' exact element={<Home />} />
             <Route path='/home' element={<Home />} />
+            <Route path='/login' element={<Login />} />
             <Route
-                path='/login'
+                path='/profile'
                 element={
                     <PrivateRoute>
-                        <Login />
+                        <Profile />
                     </PrivateRoute>
                 }
             />
             <Route path='/register' element={<Register />} />
             <Route path='/otp' element={<OTPVerification />} />
+            <Route path='*' element={<NotFound />} />
         </Route>
     )
 );
