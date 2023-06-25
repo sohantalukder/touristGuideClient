@@ -17,6 +17,7 @@ const initialValues = {
 };
 
 const Login = () => {
+    const { preference } = useSelector((state) => state.preference) || {};
     const navigate = useNavigate();
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePassword = () => {
@@ -57,12 +58,12 @@ const Login = () => {
         user?.token && navigate("/");
     }, [user]);
     return (
-        <div>
+        <>
             <SEO
                 title='Login'
-                description='Discover and explore your dream destinations with our tourist guide website. Immerse yourself in local culture, uncover hidden gems, and visit iconic landmarks. Enhance your travel experience by hiring experienced guides through our platform. Create unforgettable memories with us as your trusted companion on your next adventure.'
-                name='Tourist Guide'
-                type='travel, tour, tourist, guide'
+                description={preference?.website_description}
+                name={preference?.website_name}
+                type={preference?.website_keywords}
             />
             <div className='container mx-auto max-w-[1180px] px-4 lg:px-0 py-16'>
                 <div className='flex flex-col lg:flex-row items-center justify-center'>
@@ -194,7 +195,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
