@@ -1,17 +1,19 @@
 import { apiSlice } from "../../api/apiSlice";
-import { preference } from "./preferenceSlice";
-export const preferenceApi = apiSlice.injectEndpoints({
+import { topGuiders } from "./topGuidersSlice";
+export const topGuidersApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        preference: builder.mutation({
+        topGuiders: builder.mutation({
             query: () => ({
-                url: "/preference",
+                url: "/guider/top/list",
                 method: "GET",
             }),
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 try {
                     const result = await queryFulfilled;
                     if (result?.data?.response?.status?.code === 200) {
-                        dispatch(preference(result?.data?.response?.records));
+                        dispatch(
+                            topGuiders(result?.data?.response?.records?.guiders)
+                        );
                     }
                 } catch (e) {
                     console.log(e.message);
@@ -21,4 +23,4 @@ export const preferenceApi = apiSlice.injectEndpoints({
     }),
 });
 
-export const { usePreferenceMutation } = preferenceApi;
+export const { useTopGuidersMutation } = topGuidersApi;

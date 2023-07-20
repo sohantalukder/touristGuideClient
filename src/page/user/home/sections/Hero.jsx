@@ -5,7 +5,7 @@ import { SiGumroad } from "react-icons/si";
 import backgroundImage from "../../../../assets/images/hero-image.jpg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import District from "./District";
+import District from "../sections/District/District";
 const Hero = () => {
     const [isActive, setActive] = useState(true);
     const toggleClass = () => {

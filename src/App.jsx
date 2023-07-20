@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Outlet } from "react-router-dom";
 import NavBar from "./components/navbar/Navbar";
 import { Toaster, toast } from "react-hot-toast";
@@ -38,7 +39,7 @@ const App = () => {
             getData();
         }
         return () => (isMounted = false);
-    }, []);
+    }, [dispatch]);
     return (
         <>
             <HelmetProvider>
