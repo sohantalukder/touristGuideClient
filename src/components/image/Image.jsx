@@ -4,13 +4,14 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import Skeleton from "../../utils/skeleton/Skeleton";
 const Image = ({ src, className, alt = "", width, height }) => {
     const [loading, setLoading] = useState(false);
-    return !loading ? (
+    return loading ? (
         <LazyLoadImage
             alt={alt}
             height={width}
             src={src}
             width={height}
             style={className}
+            className='object-cover'
             onLoad={() => setLoading(true)}
         />
     ) : (
