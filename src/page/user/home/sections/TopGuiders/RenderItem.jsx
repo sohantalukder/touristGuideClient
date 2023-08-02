@@ -10,7 +10,7 @@ const RenderItem = ({ guider = {} }) => {
                 <p className='font-semibold'>${price}/ hr</p>
             </div>
             <div className='px-16 pt-16 flex flex-col justify-center items-center '>
-                <div className='rounded-full w-[150px] h-[150px] overflow-hidden'>
+                <div className='rounded-full w-[150px] h-[150px] overflow-hidden object-contain'>
                     <Image src={profileImage} alt='' />
                 </div>
 

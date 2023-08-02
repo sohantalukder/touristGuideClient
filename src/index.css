@@ -20,7 +20,9 @@ body {
 .hamburger {
     display: none;
 }
-
+.header {
+    @apply after:absolute  after:bottom-[12px] after:left-0  after:w-24 after:h-1 after:bg-green;
+}
 @media screen and (max-width: 940px) {
     .navbar-home {
         max-width: 100%;

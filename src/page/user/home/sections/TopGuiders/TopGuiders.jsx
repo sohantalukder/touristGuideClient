@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Link } from "react-router-dom";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -9,10 +8,9 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import { useState } from "react";
-import Image from "../../../../../components/image/Image";
 import Skeleton from "../../../../../utils/skeleton/Skeleton";
-import StarRating from "../../../../../components/star-rating/StarRating";
 import RenderItem from "./RenderItem";
+import TopHeading from "../../../../../components/top-heading/TopHeading";
 
 const TopGuiders = () => {
     const [topGuiders, { isLoading, error }] = useTopGuidersMutation();
@@ -21,7 +19,6 @@ const TopGuiders = () => {
     const getData = async () => {
         const result = await topGuiders();
         const { records, status } = result?.data?.response || {};
-        console.log(records);
         if (status?.code === 200) {
             return setData(records?.guiders);
         } else {
@@ -45,13 +42,11 @@ const TopGuiders = () => {
         </div>
     ) : (
         <div className='container max-w-[1180px] mx-auto my-16'>
-            <h1 className='text-2xl md:text-4xl relative font-semibold pb-6 header'>
-                Top Tending Tourist Places
-            </h1>
-            <p className='mb-12'>
-                Our goal is to get to the place of your choice very easily and
-                let you enjoy the natural beauty of Bangladesh.
-            </p>
+            <TopHeading
+                header={"Top Tending Tourist Places"}
+                description='Our goal is to get to the place of your choice very easily and
+                let you enjoy the natural beauty of Bangladesh.'
+            />
             <div className='flex justify-center'>
                 <Swiper
                     slidesPerView={1}
@@ -88,7 +83,7 @@ const TopGuiders = () => {
                                 key={index}
                                 className=' relative border border-mediumGray '
                             >
-                                <RenderItem guider={guider} />
+                                <RenderItem guider={guider} key={index} />
                             </SwiperSlide>
                         );
                     })}
