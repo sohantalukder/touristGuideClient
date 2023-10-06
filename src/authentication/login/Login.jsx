@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
 import { ReactComponent as LoginImage } from "../../assets/svg/sign-in-illustration.svg";
 import { toast } from "react-hot-toast";
@@ -12,6 +11,7 @@ import { useLoginMutation } from "../../redux/slice/authentication/authApi";
 import { Link, useNavigate } from "react-router-dom";
 import SEO from "../../utils/seo/SEO";
 import { routes } from "../../route/routeName";
+import { effect, useSignal } from "@preact/signals-react";
 const initialValues = {
     email: "",
     password: "",
@@ -20,9 +20,10 @@ const initialValues = {
 const Login = () => {
     const { preference } = useSelector((state) => state.preference) || {};
     const navigate = useNavigate();
-    const [passwordShown, setPasswordShown] = useState(false);
+    const passwordShown = useSignal(false);
     const togglePassword = () => {
-        setPasswordShown(!passwordShown);
+        const value = passwordShown.value;
+        passwordShown.value = !value;
     };
     const [login, { isLoading, error: isError }] = useLoginMutation();
     const { user } = useSelector((state) => state.auth) || {};
@@ -52,12 +53,12 @@ const Login = () => {
                 return;
             },
         });
-    useEffect(() => {
+    effect(() => {
         isError && toast.error(isError.data?.response?.status?.message);
-    }, [isError]);
-    useEffect(() => {
+    });
+    effect(() => {
         user?.token && navigate("/");
-    }, [user]);
+    });
     return (
         <>
             <SEO
@@ -130,10 +131,10 @@ const Login = () => {
                                                         errors.password
                                                     }
                                                     passwordShown={
-                                                        passwordShown
+                                                        passwordShown.value
                                                     }
                                                     leftIcon={
-                                                        !passwordShown ? (
+                                                        !passwordShown.value ? (
                                                             <BiHide
                                                                 className='absolute top-[43px] right-4 text-xl cursor-pointer'
                                                                 onClick={

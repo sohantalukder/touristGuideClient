@@ -9,21 +9,22 @@ import SEO from "./utils/seo/SEO";
 import SmoothScroll from "./utils/smoothScroll/SmoothScroll";
 import { usePreferenceMutation } from "./redux/slice/preference/preferenceApi";
 import { useEffect } from "react";
-import { useState } from "react";
 import loaderAnimation from "./assets/lottie/home_loader.json";
 import LottiePlayer from "lottie-react";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { userLoggedIn } from "./redux/slice/authentication/authSlice";
+import { signal } from "@preact/signals-react";
 const App = () => {
     const [preference, { isLoading, error }] = usePreferenceMutation();
-    const [data, setData] = useState({});
+    const data = signal({});
     const dispatch = useDispatch();
     const getData = async () => {
         const result = await preference();
         const { records, status } = result?.data?.response || {};
         if (status?.code === 200) {
-            return setData(records);
+            data.value = records;
+            return;
         } else {
             toast.error(error || status?.message);
         }
@@ -43,7 +44,7 @@ const App = () => {
     return (
         <>
             <HelmetProvider>
-                {isLoading && Object?.keys(data)?.length === 0 ? (
+                {isLoading && Object?.keys(data.value)?.length === 0 ? (
                     <LottiePlayer
                         animationData={loaderAnimation}
                         loop={true}
@@ -52,10 +53,10 @@ const App = () => {
                 ) : (
                     <SmoothScroll>
                         <SEO
-                            title={data?.website_name}
-                            description={data?.website_description}
-                            name={data?.website_name}
-                            type={data?.website_keywords}
+                            title={data.value?.website_name}
+                            description={data.value?.website_description}
+                            name={data.value?.website_name}
+                            type={data.value?.website_keywords}
                         />
                         <NavBar />
                         <Outlet />
