@@ -1,31 +1,33 @@
+import { routes } from "../../route/routeName";
+
 export const links = [
     {
         name: "Home",
-        routeName: "home",
+        routeName: routes.home,
     },
     {
         name: "Destinations",
-        routeName: "destinations",
+        routeName: routes.destinations,
     },
     {
         name: "Create Event",
-        routeName: "create_event",
+        routeName: routes.createEvent,
     },
     {
         name: "Blog",
-        routeName: "blog",
+        routeName: routes.blog,
         subLinks: [
-            { name: "Blog", routeName: "blog" },
-            { name: "Create Blog", routeName: "create_blog" },
+            { name: "Blog", routeName: routes.blogs },
+            { name: "Create Blog", routeName: routes.create },
         ],
     },
     {
         name: "Pages",
         routeName: "pages",
         subLinks: [
-            { name: "Gallery", routeName: "gallery" },
-            { name: "Hire Guiders", routeName: "hire_guiders" },
-            { name: "Contact Us", routeName: "contact_us" },
+            { name: "Gallery", routeName: routes.gallery },
+            { name: "Hire Guiders", routeName: routes.guiderHire },
+            { name: "Contact Us", routeName: routes.contact },
         ],
     },
 ];

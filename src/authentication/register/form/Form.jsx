@@ -9,6 +9,7 @@ import { mutation } from "../../../utils/apiRequest/apiRequest";
 import { useNavigate } from "react-router-dom";
 import CustomInput from "../../../components/customInput/CustomInput";
 import Spinner from "../../../components/spinner/Spinner";
+import { routes } from "../../../route/routeName";
 const Form = ({}) => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -35,7 +36,7 @@ const Form = ({}) => {
                     const { status, records } = result?.response;
                     if (status?.code === 201) {
                         toast.loading(status?.message);
-                        navigate("/otp", {
+                        navigate(routes.otp, {
                             state: { data: records },
                         });
                         action?.resetForm();

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import NavProfileInfo from "./NavProfileInfo";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { routes } from "../../../route/routeName";
 
 const ScreenNav = ({ user, setShowMenu }) => {
     return (
@@ -23,7 +24,7 @@ const ScreenNav = ({ user, setShowMenu }) => {
                     ) : (
                         <Link
                             className='btn-theme hidden md:block btn-two'
-                            to='/login'
+                            to={routes.login}
                         >
                             Log In
                         </Link>

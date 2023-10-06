@@ -5,6 +5,7 @@ import Form from "./form/Form";
 import GoogleLogin from "../../utils/googleLogin/GoogleLogin";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { routes } from "../../route/routeName";
 const Register = () => {
     const navigate = useNavigate();
     const { user } = useSelector((state) => state.auth) || {};
@@ -48,7 +49,7 @@ const Register = () => {
                                 <p>
                                     I have an account!{" "}
                                     <Link
-                                        to='/login'
+                                        to={routes.login}
                                         className='text-green hover:underline'
                                     >
                                         Log In

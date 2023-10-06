@@ -9,6 +9,7 @@ import { ReactComponent as DefaultImage } from "../../../assets/svg/user.svg";
 import { Link } from "react-router-dom";
 import { userLoggedOut } from "../../../redux/slice/authentication/authSlice";
 import { useDispatch } from "react-redux";
+import { routes } from "../../../route/routeName";
 const NavProfileInfo = ({ user }) => {
     const { name, image, email } = user || {};
     const dispatch = useDispatch();
@@ -64,7 +65,7 @@ const NavProfileInfo = ({ user }) => {
                 <div className='flex flex-col gap-4 px-4 pt-4'>
                     <Link
                         className='!text-black !ml-0 flex gap-5 items-center text-sm text-medium hover:!bg-transparent w-full'
-                        to='/profile'
+                        to={routes.profile}
                     >
                         <AccountIcon />
                         <span>View Profile</span>

@@ -12,13 +12,11 @@ const NavLinks = () => {
                             <>
                                 <span>{item?.name}</span>
                                 <ul className='submenu-nav'>
-                                    {item?.subLinks?.map((item, index) => {
+                                    {item?.subLinks?.map((subItem, index) => {
                                         return (
                                             <li key={index}>
-                                                <Link
-                                                    to={`/$${item?.routeName}`}
-                                                >
-                                                    {item?.name}
+                                                <Link to={subItem?.routeName}>
+                                                    {subItem?.name}
                                                 </Link>
                                             </li>
                                         );
@@ -26,7 +24,7 @@ const NavLinks = () => {
                                 </ul>
                             </>
                         ) : (
-                            <Link to={`/${item?.routeName}`}>{item?.name}</Link>
+                            <Link to={item?.routeName}>{item?.name}</Link>
                         )}
                     </li>
                 );

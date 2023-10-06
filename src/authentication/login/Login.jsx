@@ -11,6 +11,7 @@ import CustomInput from "../../components/customInput/CustomInput";
 import { useLoginMutation } from "../../redux/slice/authentication/authApi";
 import { Link, useNavigate } from "react-router-dom";
 import SEO from "../../utils/seo/SEO";
+import { routes } from "../../route/routeName";
 const initialValues = {
     email: "",
     password: "",
@@ -43,7 +44,7 @@ const Login = () => {
                     navigate(-1);
                     action.resetForm();
                 } else if (status?.code === 202) {
-                    navigate("/otp", { state: { data: records } });
+                    navigate(routes.otp, { state: { data: records } });
                     action.resetForm();
                     toast.loading(status?.message);
                 }
@@ -183,7 +184,7 @@ const Login = () => {
                                     <p>
                                         Don't have account?{" "}
                                         <Link
-                                            to='/register'
+                                            to={routes.register}
                                             className='text-green hover:underline'
                                         >
                                             Register
