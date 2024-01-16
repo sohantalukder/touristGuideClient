@@ -18,7 +18,6 @@ const initialValues = {
 };
 
 const Login = () => {
-    const { preference } = useSelector((state) => state.preference) || {};
     const navigate = useNavigate();
     const passwordShown = useSignal(false);
     const togglePassword = () => {
@@ -61,12 +60,7 @@ const Login = () => {
     });
     return (
         <>
-            <SEO
-                title='Login'
-                description={preference?.website_description}
-                name={preference?.website_name}
-                type={preference?.website_keywords}
-            />
+            <SEO title='Login' />
             <div className='container mx-auto max-w-[1180px] px-4 lg:px-0 py-16'>
                 <div className='flex flex-col lg:flex-row items-center justify-center'>
                     <div className='w-full lg:w-[537px] hidden lg:block'>
@@ -183,7 +177,7 @@ const Login = () => {
                                 <GoogleLogin />
                                 <div>
                                     <p>
-                                        Don't have account?{" "}
+                                        Don&apos;t have account?{" "}
                                         <Link
                                             to={routes.register}
                                             className='text-green hover:underline'

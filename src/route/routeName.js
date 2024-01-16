@@ -16,4 +16,5 @@ export const routes = {
     gallery: "/gallery",
     guiderHire: "/guider/hire",
     contact: "/contact",
+    adminLogin: "/admin/login",
 };

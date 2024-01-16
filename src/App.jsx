@@ -1,50 +1,20 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Outlet } from "react-router-dom";
 import NavBar from "./components/navbar/Navbar";
-import { Toaster, toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import ScrollTop from "./components/scrollTop/ScrollTop";
 import Footer from "./components/footer/Footer.jsx";
 import { HelmetProvider } from "react-helmet-async";
 import SEO from "./utils/seo/SEO";
 import SmoothScroll from "./utils/smoothScroll/SmoothScroll";
-import { usePreferenceMutation } from "./redux/slice/preference/preferenceApi";
-import { useEffect } from "react";
 import loaderAnimation from "./assets/lottie/home_loader.json";
 import LottiePlayer from "lottie-react";
-import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
-import { userLoggedIn } from "./redux/slice/authentication/authSlice";
-import { signal } from "@preact/signals-react";
+import useApp from "./useApp.hook";
 const App = () => {
-    const [preference, { isLoading, error }] = usePreferenceMutation();
-    const data = signal({});
-    const dispatch = useDispatch();
-    const getData = async () => {
-        const result = await preference();
-        const { records, status } = result?.data?.response || {};
-        if (status?.code === 200) {
-            data.value = records;
-            return;
-        } else {
-            toast.error(error || status?.message);
-        }
-    };
-    useEffect(() => {
-        let isMounted = true;
-        if (isMounted) {
-            const userInfoFromStorage = Cookies.get("auth")
-                ? JSON.parse(Cookies.get("auth"))
-                : {};
-
-            dispatch(userLoggedIn(userInfoFromStorage));
-            getData();
-        }
-        return () => (isMounted = false);
-    }, [dispatch]);
+    const { preferenceData, isLoading, route } = useApp();
     return (
         <>
             <HelmetProvider>
-                {isLoading && Object?.keys(data.value)?.length === 0 ? (
+                {isLoading && Object?.keys(preferenceData)?.length === 0 ? (
                     <LottiePlayer
                         animationData={loaderAnimation}
                         loop={true}
@@ -53,12 +23,12 @@ const App = () => {
                 ) : (
                     <SmoothScroll>
                         <SEO
-                            title={data.value?.website_name}
-                            description={data.value?.website_description}
-                            name={data.value?.website_name}
-                            type={data.value?.website_keywords}
+                            title={preferenceData?.website_name}
+                            description={preferenceData?.website_description}
+                            name={preferenceData?.website_name}
+                            type={preferenceData?.website_keywords}
                         />
-                        <NavBar />
+                        {route ? <></> : <NavBar />}
                         <Outlet />
                         <Toaster
                             position='bottom-center'
@@ -76,8 +46,7 @@ const App = () => {
                                 },
                             }}
                         />
-                        <ScrollTop />
-                        <Footer />
+                        <ScrollTop /> {route ? <></> : <Footer />}
                     </SmoothScroll>
                 )}
             </HelmetProvider>

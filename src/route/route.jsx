@@ -12,10 +12,13 @@ import Home from "../page/user/home/Home";
 import Profile from "../page/user/profile/Profile.";
 import NotFound from "../page/notFound/NotFound";
 import { routes } from "./routeName";
+import AdminLogin from "../authentication/login/AdminLogin";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path={routes.default} element={<App />}>
+            <Route path={routes.notFound} element={<NotFound />} />
+            {/* For User */}
             <Route path={routes.default} exact element={<Home />} />
             <Route path={routes.home} element={<Home />} />
             <Route path={routes.login} element={<Login />} />
@@ -28,9 +31,10 @@ const router = createBrowserRouter(
                 }
             />
             <Route path={routes.register} element={<Register />} />
-            {/* <t */}
             <Route path={routes.otp} element={<OTPVerification />} />
-            <Route path={routes.notFound} element={<NotFound />} />
+
+            {/* For Admin */}
+            <Route path={routes.adminLogin} element={<AdminLogin />} />
         </Route>
     )
 );

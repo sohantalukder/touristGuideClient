@@ -14,7 +14,9 @@ export const authApi = apiSlice.injectEndpoints({
                     if (result?.data?.response?.status?.code === 200) {
                         dispatch(userLoggedIn(result?.data?.response?.records));
                     }
-                } catch (e) {}
+                } catch (e) {
+                    console.log(e.message);
+                }
             },
         }),
     }),

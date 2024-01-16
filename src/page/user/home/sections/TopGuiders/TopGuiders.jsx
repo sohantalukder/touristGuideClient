@@ -83,7 +83,7 @@ const TopGuiders = () => {
                                 key={index}
                                 className=' relative border border-mediumGray '
                             >
-                                <RenderItem guider={guider} key={index} />
+                                <RenderItem guider={guider} />
                             </SwiperSlide>
                         );
                     })}

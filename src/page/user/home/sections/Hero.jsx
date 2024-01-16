@@ -113,9 +113,10 @@ const Hero = () => {
                             ) : (
                                 <div className='bg-white py-8  px-6 w-full'>
                                     <div className='grid lg:grid-cols-7 grid-cols-2 md:grid-cols-4 gap-x-7 '>
-                                        {districts.map((district) => (
+                                        {districts.map((district, index) => (
                                             <District
                                                 district={district}
+                                                key={index}
                                             ></District>
                                         ))}
                                     </div>

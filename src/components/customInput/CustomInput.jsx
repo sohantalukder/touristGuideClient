@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 const CustomInput = ({
     type = "text",
     style,
@@ -66,3 +67,25 @@ const CustomInput = ({
 };
 
 export default CustomInput;
+
+CustomInput.propTypes = {
+    type: PropTypes.string,
+    style: PropTypes.string || PropTypes.object,
+    placeholder: PropTypes.string,
+    name: PropTypes.string,
+    error: PropTypes.string,
+    isError: PropTypes.bool,
+    leftIcon: PropTypes.element,
+    rightIcon: PropTypes.element,
+    label: PropTypes.string,
+    labelStyle: PropTypes.string || PropTypes.object,
+    required: PropTypes.bool,
+    ref: PropTypes.any,
+    editable: PropTypes.bool,
+    value: PropTypes.string,
+    onChange: PropTypes.func,
+    passwordShown: PropTypes.bool,
+    maxLength: PropTypes.number,
+    minLength: PropTypes.number,
+    onBlur: PropTypes.func,
+};

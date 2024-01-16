@@ -1,14 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { sliceName } from "../../sliceName/sliceName";
 const initialState = { preference: {} };
 
 const getPreference = createSlice({
-    name: "preference",
+    name: sliceName.preference,
     initialState,
     reducers: {
-        preference: (state, action) => {
-            if (action.payload) {
-                state.preference = action.payload;
-            }
+        preference: (state, { payload }) => {
+            state.preference = payload;
         },
     },
 });
